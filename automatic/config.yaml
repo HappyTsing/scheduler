@@ -1,15 +1,69 @@
-window_class: TForm1
+parent_phases: {
+  daily_activity: {
+    phases: [
+      {id: 0, name: 日常活动, action: click},
+      {id: 1, name: 日常活动_选中, action: check},
+    ]
+  },
 
-# img_path: c:/Users/leki/Desktop/roco-master/automatic/img
-img_path: C:\Users\leki\Desktop\roco-master\automatic\img
+  activity_area: {
+    phases: [
+      {id: 0, name: 活动专区, action: click},
+      {id: 1, name: 活动专区_选中, action: check},
+    ]
+  },
+
+  activity_butler: {
+    parent_phase: activity_area,
+    phases: [
+      {id: 0, name: 活动管家, action: click},
+      {id: 1, name: 活动管家_选中, action: check},
+    ]
+  },
+
+  diamond_mission: {
+    parent_phase: activity_area,
+    phases: [
+      {id: 0, name: 钻石任务, action: click},
+      {id: 1, name: 钻石任务_选中, action: check},
+    ]
+  },
+
+  star_palace: {
+    parent_phase: activity_area,
+    phases: [
+      {id: 0, name: 十二星宫, action: click},
+      {id: 1, name: 十二星宫_选中, action: check},
+    ]
+  },
+
+  everyday: {
+    parent_phase: activity_butler,
+    phases: [
+      {id: 0, name: 日常, action: click},
+      {id: 1, name: 日常_选中, action: check},
+    ]
+  },
+
+  permanent: {
+    parent_phase: activity_butler,
+    phases: [
+      {id: 0, name: 常驻, action: click},
+      {id: 1, name: 常驻_选中, action: check},
+    ]
+  }
+}
 
 tasks:
-  - friend_manor_assistant: [
-    {id: 0, name: 日常活动, action: click},
-    {id: 1, name: 日常活动_选中, action: check},
-    {id: 2, name: 好友庄园助手, action: click},
-    {id: 3, name: 好友庄园助手_选中, action: check},
-    {id: 4, name: 开始, action: click},
-    {id: 5, name: 开始_选中, action: check},
-    {id: 6, name: 结束状态, action: finish},
-    ]
+  - {
+    name: 好友庄园助手,
+    name_en: friend_manor_assistantm,
+    parent_phase: daily_activity,
+    phases: [
+      {id: 0, name: 好友庄园助手, action: click},
+      {id: 1, name: 好友庄园助手_选中, action: check},
+      {id: 2, name: 开始, action: click},
+      {id: 3, name: 开始_选中, action: check},
+      {id: 4, name: 结束状态, action: finish},
+      ]
+  }
