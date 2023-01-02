@@ -1,0 +1,15 @@
+window_class: TForm1
+
+# img_path: c:/Users/leki/Desktop/roco-master/automatic/img
+img_path: C:\Users\leki\Desktop\roco-master\automatic\img
+
+tasks:
+  - friend_manor_assistant: [
+    {id: 0, name: 日常活动, action: click},
+    {id: 1, name: 日常活动_选中, action: check},
+    {id: 2, name: 好友庄园助手, action: click},
+    {id: 3, name: 好友庄园助手_选中, action: check},
+    {id: 4, name: 开始, action: click},
+    {id: 5, name: 开始_选中, action: check},
+    {id: 6, name: 结束状态, action: finish},
+    ]
