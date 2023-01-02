@@ -57,7 +57,7 @@ parent_phases: {
 tasks:
   - {
     name: 好友庄园助手,
-    name_en: friend_manor_assistantm,
+    name_en: friend_manor_assistant,
     parent_phase: daily_activity,
     phases: [
       {id: 0, name: 好友庄园助手, action: click},

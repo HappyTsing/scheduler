@@ -14,11 +14,13 @@ IMG_PATH = os.path.join(CUR_PATH, "img")
 def config_parser(config):
     parent_phases = config["parent_phases"]
     tasks = config["tasks"]
-    new_tasks = []
+    new_tasks = {}
+    task_name_list = []
     for task in tasks:
         parent_phases_name = task.get("parent_phase")
         phases = task.get("phases")
         task_name = task.get("name_en")
+        task_name_list.append(task_name)
         is_parent = False
         new_phases = []
         while True:
@@ -50,15 +52,16 @@ def config_parser(config):
             phases = p_task.get("phases")
         new_task = {
             "name": task.get("name"),
+            "name_en": task.get("name_en"),
             "phases": new_phases
         }
-        new_tasks.append(new_task)
-    return new_tasks
+        new_tasks[task.get("name_en")] = new_task
+    return new_tasks,task_name_list
 
 
 with open(CONFIG_PATH, 'r', encoding='utf-8') as _fp:
     config = yaml.safe_load(_fp)
-    tasks = config_parser(config)
+    tasks,task_name_list = config_parser(config)
 
 if __name__ == '__main__':
     pass
