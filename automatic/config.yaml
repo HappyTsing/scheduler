@@ -1,14 +1,14 @@
 parent_phases: {
   daily_activity: {
     phases: [
-      {id: 0, name: 日常活动, action: click},
+      {id: 0, name: 日常活动, action: click, times: 1},
       {id: 1, name: 日常活动_选中, action: check},
     ]
   },
 
   activity_area: {
     phases: [
-      {id: 0, name: 活动专区, action: click},
+      {id: 0, name: 活动专区, action: click, times: 1},
       {id: 1, name: 活动专区_选中, action: check},
     ]
   },
@@ -16,15 +16,16 @@ parent_phases: {
   activity_butler: {
     parent_phase: activity_area,
     phases: [
-      {id: 0, name: 活动管家, action: click},
+      {id: 0, name: 活动管家, action: click, times: 1},
       {id: 1, name: 活动管家_选中, action: check},
+      {id: 2, name: 魔神武王_选中, action: check},
     ]
   },
 
   diamond_mission: {
     parent_phase: activity_area,
     phases: [
-      {id: 0, name: 钻石任务, action: click},
+      {id: 0, name: 钻石任务, action: click, times: 1},
       {id: 1, name: 钻石任务_选中, action: check},
     ]
   },
@@ -32,7 +33,7 @@ parent_phases: {
   star_palace: {
     parent_phase: activity_area,
     phases: [
-      {id: 0, name: 十二星宫, action: click},
+      {id: 0, name: 十二星宫, action: click, times: 1},
       {id: 1, name: 十二星宫_选中, action: check},
     ]
   },
@@ -40,7 +41,7 @@ parent_phases: {
   everyday: {
     parent_phase: activity_butler,
     phases: [
-      {id: 0, name: 日常, action: click},
+      {id: 0, name: 日常, action: click, times: 1},
       {id: 1, name: 日常_选中, action: check},
     ]
   },
@@ -48,7 +49,7 @@ parent_phases: {
   permanent: {
     parent_phase: activity_butler,
     phases: [
-      {id: 0, name: 常驻, action: click},
+      {id: 0, name: 常驻, action: click, times: 1},
       {id: 1, name: 常驻_选中, action: check},
     ]
   }
@@ -60,10 +61,117 @@ tasks:
     name_en: friend_manor_assistant,
     parent_phase: daily_activity,
     phases: [
-      {id: 0, name: 好友庄园助手, action: click},
+      {id: 0, name: 好友庄园助手, action: click, times: 1},
       {id: 1, name: 好友庄园助手_选中, action: check},
-      {id: 2, name: 开始, action: click},
+      {id: 2, name: 开始, action: click, times: 1},
       {id: 3, name: 开始_选中, action: check},
       {id: 4, name: 结束状态, action: finish},
       ]
   }
+
+  - {
+    name: 取物助手,
+    name_en: fetch_assistant,
+    parent_phase: daily_activity,
+    phases: [
+      {id: 0, name: 取物助手, action: click, times: 1},
+      {id: 1, name: 取物助手_选中, action: check},
+      {id: 2, name: 后台跳图, action: click, times: 1},
+      # {id: 3, name: 后台跳图_选中, action: check},
+      {id: 4, name: 海底挖宝, action: click, times: 1},
+      # {id: 5, name: 海底挖宝_选中, action: check},
+      {id: 6, name: 开始, action: click, times: 1},
+      {id: 7, name: 开始_选中, action: check},
+      {id: 8, name: 结束状态, action: finish},
+      ]
+  }
+
+  - {
+    name: 勇者训练馆,
+    name_en: brave_train_hall,
+    parent_phase: everyday,
+    phases: [
+      {id: 0, name: 勇者训练馆, action: doubleClick},
+      {id: 1, name: 勇者训练馆_执行中, action: check},
+      {id: 2, name: 结束状态, action: finish},
+      ]
+  }
+
+  - {
+    name: 暗黑远征军,
+    name_en: dark_far_force,
+    parent_phase: everyday,
+    phases: [
+      {id: 0, name: 暗黑远征军, action: doubleClick},
+      {id: 1, name: 暗黑远征军_执行中, action: check},
+      {id: 2, name: 结束状态, action: finish},
+      ]
+  }
+
+  - {
+    name: 破茧重生,
+    name_en: rebirth_from_cocoon,
+    parent_phase: everyday,
+    phases: [
+      {id: 0, name: 破茧重生, action: doubleClick},
+      {id: 1, name: 破茧重生_执行中, action: check},
+      {id: 2, name: 结束状态, action: finish},
+      ]
+  }
+
+  - {
+    name: 洛克寻宝,
+    name_en: roco_treasure_hunt,
+    parent_phase: everyday,
+    phases: [
+      {id: 0, name: 洛克寻宝, action: doubleClick},
+      {id: 1, name: 洛克寻宝_执行中, action: check},
+      {id: 2, name: 结束状态, action: finish},
+      ]
+  }
+
+  - {
+    name: 乐园探险,
+    name_en: paradise_adventure,
+    parent_phase: everyday,
+    phases: [
+      {id: 0, name: 洛克寻宝_状态1, action: click, times: 1},
+      {id: 1, name: 洛克寻宝_状态2, action: click, times: 1},
+      {id: 2, name: 洛克寻宝_状态3, action: click, times: 1},
+      {id: 3, name: 洛克寻宝_选中, action: check},
+      {id: -1, name: 键盘按键_down, action: press, key: down, times: 1},
+      {id: 4, name: 乐园探险_选中, action: doubleClick},
+      {id: 5, name: 乐园探险_执行中, action: check},
+      {id: 6, name: 结束状态, action: finish},
+      ]
+  }
+  
+  - {
+    name: 暗黑城日常,
+    name_en: dark_city_everyday,
+    parent_phase: everyday,
+    phases: [
+      {id: 0, name: 洛克寻宝_状态1, action: click, times: 1},
+      {id: 1, name: 洛克寻宝_状态2, action: click, times: 1},
+      {id: 2, name: 洛克寻宝_状态3, action: click, times: 1},
+      {id: 3, name: 洛克寻宝_选中, action: check},
+      {id: -1, name: 键盘按键_down, action: press, key: down, times: 3},
+      {id: -1, name: 键盘按键_left, action: press, key: left, times: 1},
+      {id: 4, name: 暗黑城日常_选中, action: doubleClick},
+      {id: 5, name: 暗黑城日常_执行中, action: check},
+      {id: 6, name: 结束状态, action: finish},
+      ]
+  }
+
+
+  # - {
+  #   name: 七曜圣地,
+  #   name_en: test,
+  #   parent_phase: activity_butler,
+  #   phases: [
+  #     {id: 0, name: 七曜圣地, action: click, times: 1},
+  #     {id: 1, name: 七曜圣地_选中, action: check},
+  #     {id: 2, name: 选择难度, action: click, times: 1},
+  #     {id: 3, name: 选择难度2, action: click, times: 1},
+  #     ]
+  # }

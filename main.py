@@ -1,27 +1,33 @@
 
 # -*-coding:UTF-8 -*-
-import ctypes
-import multiprocessing
-import sys
-import aircv as ac
-from threading import Thread
-from automatic.window import Window
-from automatic.detector import Detector
+from multiprocessing import freeze_support
+from ctypes import windll
+from sys import executable
 from automatic.executor import Executor
-from time import sleep
 from loguru import logger
-from automatic.config import tasks
+from automatic.config import task_name_list
 logger.add("roco.log")
 
 def main():
     executor = Executor()
-    executor.submit("friend_manor_assistant")
+    # tasks = ["brave_train_hall"]
+    # tasks = ["dark_far_force"]
+    # tasks = ["paradise_adventure"]
+    # tasks = ["dark_city_everyday"]
+    # tasks = ["fetch_assistant"]
+    # tasks = ["friend_manor_assistant"]
+    # executor.submit("fetch_assistant")
+    # executor.test()
+    
+    for task in task_name_list:
+        executor.submit(task)
+        logger.info("============================")
 
 
 if __name__ == '__main__':
-    multiprocessing.freeze_support()
-    if ctypes.windll.shell32.IsUserAnAdmin():
+    freeze_support()
+    if windll.shell32.IsUserAnAdmin():
         main()
     else:  # 自动以管理员身份重启
-        ctypes.windll.shell32.ShellExecuteW(
-            None, 'runas', sys.executable, __file__, None, 1)
+        windll.shell32.ShellExecuteW(
+            None, 'runas', executable, __file__, None, 1)

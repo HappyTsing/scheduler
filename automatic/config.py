@@ -1,10 +1,11 @@
 # -*-coding:UTF-8 -*-
-import yaml
-import os
+from yaml import safe_load
+from os import path
 from loguru import logger
-CUR_PATH = os.path.abspath(os.path.dirname(__file__))
-CONFIG_PATH = os.path.join(CUR_PATH, "config.yaml")
-IMG_PATH = os.path.join(CUR_PATH, "img")
+# CUR_PATH = os.path.abspath(os.path.dirname(__file__))
+CUR_PATH = path.dirname(__file__)
+CONFIG_PATH = path.join(CUR_PATH, "config.yaml")
+IMG_PATH = path.join(CUR_PATH, "img")
 
 """
 解析配置文件，返回任务列表
@@ -34,13 +35,18 @@ def config_parser(config):
                 is_parent = True
 
             for phase in phases:
-                template = os.path.join(
+                template = path.join(
                     IMG_PATH, dir_name, task_name, str(phase['id'])+".png")
-                new_phase = {
-                    "name": phase['name'],
-                    "action": phase['action'],
-                    "template": template
-                }
+                new_phase = {}
+                new_phase.update(phase)
+                new_phase.pop("id")
+                if phase['action'] != "press":
+                    new_phase["template"] = template
+                # new_phase = {
+                #     "name": phase['name'],
+                #     "action": phase['action'],
+                #     "template": template
+                # }
                 # 插到列表最前面
                 new_phases.insert(0, new_phase)
             # 循环退出条件
@@ -60,8 +66,9 @@ def config_parser(config):
 
 
 with open(CONFIG_PATH, 'r', encoding='utf-8') as _fp:
-    config = yaml.safe_load(_fp)
+    config = safe_load(_fp)
     tasks,task_name_list = config_parser(config)
+    logger.info(tasks)
 
 if __name__ == '__main__':
     pass
