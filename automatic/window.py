@@ -3,7 +3,6 @@ from pyautogui import click,press,doubleClick,moveTo
 from win32gui import EnumWindows, GetClassName, SendMessage, SetForegroundWindow, GetWindowRect, GetWindowText, DeleteObject, GetWindowDC
 from win32ui import CreateBitmap,CreateDCFromHandle
 from win32con import WM_SYSCOMMAND,SC_RESTORE
-import tkinter
 from multiprocessing import Process, Pipe
 from win32con import SRCCOPY
 from loguru import logger
@@ -21,16 +20,6 @@ class Window(Process):
         EnumWindows(lambda hwnd, param: param.append(hwnd), hwnd_list)
         for hwnd in hwnd_list:
             if GetClassName(hwnd) == "TForm1" and "悟空神辅" in GetWindowText(hwnd):
-                # 获取屏幕分辨率
-                screen = tkinter.Tk()
-                x = screen.winfo_screenwidth()
-                y = screen.winfo_screenheight()
-                screen.destroy()
-                # 像素比例
-                self.resolution_ratio_x = x / 1920
-                self.resolution_ratio_y = y / 1080
-                logger.info('屏幕分辨率: ({},{})'.format(x, y))
-
                 # 窗口置顶
                 SendMessage(hwnd, WM_SYSCOMMAND,SC_RESTORE, 0)
                 SetForegroundWindow(hwnd)

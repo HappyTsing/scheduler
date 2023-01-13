@@ -2,11 +2,24 @@
 from yaml import safe_load
 from os import path
 from loguru import logger
+import tkinter
+
 # CUR_PATH = os.path.abspath(os.path.dirname(__file__))
 CUR_PATH = path.dirname(__file__)
 CONFIG_PATH = path.join(CUR_PATH, "config.yaml")
-IMG_PATH = path.join(CUR_PATH, "img")
 
+# 获取屏幕分辨率
+screen = tkinter.Tk()
+x = screen.winfo_screenwidth()
+y = screen.winfo_screenheight()
+screen.destroy()
+logger.info('屏幕分辨率: ({},{})'.format(x, y))
+IMG_PATH = path.join(CUR_PATH, "img", "{}_{}".format(x,y))
+if not path.exists(IMG_PATH):
+    logger.error("未适配当前分辨率，请自行添加模板图片!")
+else:
+    logger.success("当前屏幕分辨率已适配!")
+    
 """
 解析配置文件，返回任务列表
 """
