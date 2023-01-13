@@ -10,18 +10,10 @@ logger.add("roco.log")
 
 def main():
     executor = Executor()
-    # tasks = ["brave_train_hall"]
-    # tasks = ["dark_far_force"]
-    # tasks = ["paradise_adventure"]
-    # tasks = ["dark_city_everyday"]
-    # tasks = ["fetch_assistant"]
-    # tasks = ["friend_manor_assistant"]
-    # executor.submit("fetch_assistant")
-    # executor.test()
     
     for task in task_name_list:
         executor.submit(task)
-        logger.info("============================")
+        logger.info("=============================== next task ===============================")
 
 
 if __name__ == '__main__':

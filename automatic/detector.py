@@ -14,11 +14,11 @@ class Detector:
     def find_location(self, image_src, image_search):
         result = find_template(image_src, image_search, self.threshold)
         if (result != None):
-            logger.info(result)
+            # logger.info(result)
             x = result['result'][0]
             y = result['result'][1]
-            logger.info('找到目标，中点位于：({},{})'.format(x, y))
+            # logger.info('找到目标，中点位于：({},{})'.format(x, y))
             return True, x, y
         else:
-            logger.info("模板图片未找到！")
+            # logger.info("模板图片未找到！")
             return False, 0, 0

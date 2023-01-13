@@ -18,23 +18,7 @@ parent_phases: {
     phases: [
       {id: 0, name: 活动管家, action: click, times: 1},
       {id: 1, name: 活动管家_选中, action: check},
-      {id: 2, name: 魔神武王_选中, action: check},
-    ]
-  },
-
-  diamond_mission: {
-    parent_phase: activity_area,
-    phases: [
-      {id: 0, name: 钻石任务, action: click, times: 1},
-      {id: 1, name: 钻石任务_选中, action: check},
-    ]
-  },
-
-  star_palace: {
-    parent_phase: activity_area,
-    phases: [
-      {id: 0, name: 十二星宫, action: click, times: 1},
-      {id: 1, name: 十二星宫_选中, action: check},
+      {id: 2, name: 魔神武王_选中, action: check, type: strict},
     ]
   },
 
@@ -56,68 +40,6 @@ parent_phases: {
 }
 
 tasks:
-  - {
-    name: 好友庄园助手,
-    name_en: friend_manor_assistant,
-    parent_phase: daily_activity,
-    phases: [
-      {id: 0, name: 好友庄园助手, action: click, times: 1},
-      {id: 1, name: 好友庄园助手_选中, action: check},
-      {id: 2, name: 开始, action: click, times: 1},
-      {id: 3, name: 开始_选中, action: check},
-      {id: 4, name: 结束状态, action: finish},
-      ]
-  }
-
-  - {
-    name: 取物助手,
-    name_en: fetch_assistant,
-    parent_phase: daily_activity,
-    phases: [
-      {id: 0, name: 取物助手, action: click, times: 1},
-      {id: 1, name: 取物助手_选中, action: check},
-      {id: 2, name: 后台跳图, action: click, times: 1},
-      # {id: 3, name: 后台跳图_选中, action: check},
-      {id: 4, name: 海底挖宝, action: click, times: 1},
-      # {id: 5, name: 海底挖宝_选中, action: check},
-      {id: 6, name: 开始, action: click, times: 1},
-      {id: 7, name: 开始_选中, action: check},
-      {id: 8, name: 结束状态, action: finish},
-      ]
-  }
-
-  - {
-    name: 勇者训练馆,
-    name_en: brave_train_hall,
-    parent_phase: everyday,
-    phases: [
-      {id: 0, name: 勇者训练馆, action: doubleClick},
-      {id: 1, name: 勇者训练馆_执行中, action: check},
-      {id: 2, name: 结束状态, action: finish},
-      ]
-  }
-
-  - {
-    name: 暗黑远征军,
-    name_en: dark_far_force,
-    parent_phase: everyday,
-    phases: [
-      {id: 0, name: 暗黑远征军, action: doubleClick},
-      {id: 1, name: 暗黑远征军_执行中, action: check},
-      {id: 2, name: 结束状态, action: finish},
-      ]
-  }
-
-  - {
-    name: 破茧重生,
-    name_en: rebirth_from_cocoon,
-    parent_phase: everyday,
-    phases: [
-      {id: 0, name: 破茧重生, action: doubleClick},
-      {id: 1, name: 破茧重生_执行中, action: check},
-      {id: 2, name: 结束状态, action: finish},
-      ]
-  }
 
   - {
     name: 洛克寻宝,
@@ -129,7 +51,6 @@ tasks:
       {id: 2, name: 结束状态, action: finish},
       ]
   }
-
   - {
     name: 乐园探险,
     name_en: paradise_adventure,
@@ -138,7 +59,7 @@ tasks:
       {id: 0, name: 洛克寻宝_状态1, action: click, times: 1},
       {id: 1, name: 洛克寻宝_状态2, action: click, times: 1},
       {id: 2, name: 洛克寻宝_状态3, action: click, times: 1},
-      {id: 3, name: 洛克寻宝_选中, action: check},
+      {id: 3, name: 洛克寻宝_选中, action: check, type: strict},
       {id: -1, name: 键盘按键_down, action: press, key: down, times: 1},
       {id: 4, name: 乐园探险_选中, action: doubleClick},
       {id: 5, name: 乐园探险_执行中, action: check},
@@ -154,7 +75,7 @@ tasks:
       {id: 0, name: 洛克寻宝_状态1, action: click, times: 1},
       {id: 1, name: 洛克寻宝_状态2, action: click, times: 1},
       {id: 2, name: 洛克寻宝_状态3, action: click, times: 1},
-      {id: 3, name: 洛克寻宝_选中, action: check},
+      {id: 3, name: 洛克寻宝_选中, action: check, type: strict},
       {id: -1, name: 键盘按键_down, action: press, key: down, times: 3},
       {id: -1, name: 键盘按键_left, action: press, key: left, times: 1},
       {id: 4, name: 暗黑城日常_选中, action: doubleClick},
@@ -163,15 +84,101 @@ tasks:
       ]
   }
 
+  - {
+    name: 魔法先锋队,
+    name_en: magic_vanguard,
+    parent_phase: permanent,
+    phases: [
+      {id: 0, name: 唤醒沉睡之灵, action: click, times: 1},
+      {id: 1, name: 唤醒沉睡之灵_选中, action: check, type: strict},
+      {id: -1, name: 键盘按键_down, action: press, key: down, times: 2},
+      {id: 2, name: 点亮火烛_选中_结束, action: doubleClick},
+      {id: 3, name: 点亮火烛_执行中, action: check},
+      {id: 2, name: 点亮火烛_选中_结束, action: finish},
+      {id: -1, name: 键盘按键_left, action: press, key: left, times: 1},
+      {id: 4, name: 齿轮转动_选中_结束, action: doubleClick},
+      {id: 5, name: 齿轮转动_执行中, action: check},
+      {id: 4, name: 齿轮转动_选中_结束, action: finish},
+      {id: -1, name: 键盘按键_down, action: press, key: down, times: 1},
+      {id: 6, name: 轻功水上漂_选中_结束, action: doubleClick},
+      {id: 7, name: 轻功水上漂_执行中, action: check},
+      {id: 6, name: 轻功水上漂_选中_结束, action: finish},
+      {id: 6, name: 轻功水上漂_选中_结束, action: doubleClick},
+      {id: 7, name: 轻功水上漂_执行中, action: check},
+      {id: 6, name: 轻功水上漂_选中_结束, action: finish},
+      {id: 6, name: 轻功水上漂_选中_结束, action: doubleClick},
+      {id: 7, name: 轻功水上漂_执行中, action: check},
+      {id: 6, name: 轻功水上漂_选中_结束, action: finish},
+      {id: -1, name: 键盘按键_left, action: press, key: left, times: 1},
+      {id: 8, name: 驱散黑魔法_选中_结束, action: doubleClick},
+      {id: 9, name: 驱散黑魔法_执行中, action: check},
+      {id: 8, name: 驱散黑魔法_选中_结束, action: finish},
+      {id: -1, name: 键盘按键_right, action: press, key: right, times: 2},
+      {id: 10, name: 稳重求胜_选中_结束, action: doubleClick},
+      {id: 11, name: 稳重求胜_执行中, action: check},
+      {id: 10, name: 稳重求胜_选中_结束, action: finish},
+      {id: -1, name: 键盘按键_down, action: press, key: down, times: 1},
+      {id: 12, name: 诸神之言_选中_结束, action: doubleClick},
+      {id: 13, name: 诸神之言_执行中, action: check},
+      {id: 12, name: 诸神之言_选中_结束, action: finish},
+      {id: -1, name: 键盘按键_left, action: press, key: left, times: 2},
+      {id: 14, name: 克服心魔_选中_结束, action: doubleClick},
+      {id: 15, name: 克服心魔_执行中, action: check},
+      {id: 14, name: 克服心魔_选中_结束, action: finish},
+      {id: -1, name: 键盘按键_down, action: press, key: down, times: 1},
+      {id: 16, name: 两小无猜_选中_结束, action: doubleClick},
+      {id: 17, name: 两小无猜_执行中, action: check},
+      {id: 16, name: 两小无猜_选中_结束, action: finish},
+      {id: -1, name: 键盘按键_right, action: press, key: right, times: 1},
+      {id: 18, name: 暗夜先锋者_选中_结束, action: doubleClick},
+      {id: 19, name: 暗夜先锋者_执行中, action: check},
+      {id: 18, name: 暗夜先锋者_选中_结束, action: finish},
+      {id: -1, name: 键盘按键_left, action: press, key: left, times: 1},
+      {id: -1, name: 键盘按键_down, action: press, key: down, times: 1},
+      {id: 20, name: 虫虫空间的危机_选中_结束, action: doubleClick},
+      {id: 21, name: 虫虫空间的危机_执行中, action: check},
+      {id: 20, name: 虫虫空间的危机_选中_结束, action: finish},
+    ]
+
+  }
+
+  - {
+      name: 好友庄园助手,
+      name_en: friend_manor_assistant,
+      parent_phase: daily_activity,
+      phases: [
+        {id: 0, name: 好友庄园助手, action: click, times: 1},
+        {id: 1, name: 好友庄园助手_选中, action: check},
+        {id: 2, name: 开始, action: click, times: 1},
+        {id: 3, name: 开始_选中, action: check},
+        {id: 4, name: 结束状态, action: finish},
+        ]
+    }
+
+  - {
+      name: 星辰之塔,
+      name_en: tower_of_stars,
+      phases: [
+        {id: 0, name: 星辰之塔, action: click, times: 1},
+        {id: 1, name: 星辰之塔_选中, action: check},
+        {id: 2, name: 扫荡, action: click, times: 1},
+        ]
+    }
+
 
   # - {
-  #   name: 七曜圣地,
-  #   name_en: test,
-  #   parent_phase: activity_butler,
+  #   name: 取物助手,
+  #   name_en: fetch_assistant,
+  #   parent_phase: daily_activity,
   #   phases: [
-  #     {id: 0, name: 七曜圣地, action: click, times: 1},
-  #     {id: 1, name: 七曜圣地_选中, action: check},
-  #     {id: 2, name: 选择难度, action: click, times: 1},
-  #     {id: 3, name: 选择难度2, action: click, times: 1},
+  #     {id: 0, name: 取物助手, action: click, times: 1},
+  #     {id: 1, name: 取物助手_选中, action: check},
+  #     {id: 2, name: 后台跳图, action: click, times: 1},
+  #     # {id: 3, name: 后台跳图_选中, action: check},
+  #     {id: 4, name: 海底挖宝, action: click, times: 1},
+  #     # {id: 5, name: 海底挖宝_选中, action: check},
+  #     {id: 6, name: 开始, action: click, times: 1},
+  #     {id: 7, name: 开始_选中, action: check},
+  #     {id: 8, name: 结束状态, action: finish},
   #     ]
   # }

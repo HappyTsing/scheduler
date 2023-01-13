@@ -68,7 +68,7 @@ def config_parser(config):
 with open(CONFIG_PATH, 'r', encoding='utf-8') as _fp:
     config = safe_load(_fp)
     tasks,task_name_list = config_parser(config)
-    logger.info(tasks)
+    # logger.info(tasks)
 
 if __name__ == '__main__':
     pass

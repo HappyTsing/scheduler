@@ -8,9 +8,6 @@ from multiprocessing import Process, Pipe
 from win32con import SRCCOPY
 from loguru import logger
 from numpy import uint8,frombuffer
-import cv2
-import pyautogui
-import numpy as np
 """
 游戏窗口，不断获取窗口截图
 """
@@ -58,14 +55,14 @@ class Window(Process):
         return self.receiver.recv()
 
     # bloonstd无法获取通过win32获取屏幕截图，采用pyautogui的方式
-    def run(self):
-        while True:
-            # 截图
-            screenshot = pyautogui.screenshot()
-            # 先转换为numpy数组，再将rgb格式转换为opencv的bgr格式
-            image = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2BGR)
-            # 将图片数组写入管道中
-            self.sender.send(image)
+    # def run(self):
+    #     while True:
+    #         # 截图
+    #         screenshot = pyautogui.screenshot()
+    #         # 先转换为numpy数组，再将rgb格式转换为opencv的bgr格式
+    #         image = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2BGR)
+    #         # 将图片数组写入管道中
+    #         self.sender.send(image)
 
     # win32方式截图，参考：https://blog.csdn.net/weixin_40875387/article/details/127716504
     def run(self):

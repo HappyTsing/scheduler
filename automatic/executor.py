@@ -19,14 +19,14 @@ class Executor:
             sleep(0.3)
     def submit(self, task_name):
         task = tasks.get(task_name)
+        task_name = task["name"]
+        logger.info("当前任务: {}".format(task_name))
         phases = task["phases"]
-        logger.info(phases)
         for phase in phases:
             phase_action = phase["action"]
             phase_name = phase["name"]
             if(phase.get("template") != None):
                 phase_template = imread(phase.get("template"))
-            logger.info("任务阶段: {}".format(phase_name))
             iter = 0
             if phase_action == "click":
                 while iter < 3:
@@ -37,12 +37,12 @@ class Executor:
                     if find:
                         phase_times = phase["times"]
                         self.window.click(relative_x,relative_y,phase_times)
-                        logger.info("点击完成")
+                        logger.success(" [{} - {}] click success".format(task_name, phase_name))
                         break
                     else:
                         # 检查是否已经check
                         iter+=1
-                        logger.info("action: click, 迭代次数: {}".format(iter))
+                        logger.info(" [{} - {}] click failed: not found, try {} times.".format(task_name, phase_name, iter))
                         sleep(0.5)
                         
             elif phase_action == "doubleClick":
@@ -52,20 +52,19 @@ class Executor:
                         full_window, phase_template)
                     if find:
                         self.window.doubleClick(relative_x,relative_y)
-                        logger.info("双击完成")
+                        logger.success(" [{} - {}] double click success".format(task_name, phase_name))
                         break
                     else:
                         # 检查是否已经check
                         iter+=1
-                        logger.info("action: click, 迭代次数: {}".format(iter))
+                        logger.info(" [{} - {}] double click failed: not found, try {} times.".format(task_name, phase_name, iter))
                         sleep(0.5)            
                         
             elif phase_action == "press":
                 phase_key = phase["key"]
                 phase_times = phase["times"]
                 self.window.press(phase_key,phase_times)
-                logger.info("按下按键{}成功".format(phase_key))
-                
+                logger.success(" [{} - {}] press {} {} times.".format(task_name, phase_name, phase_key,phase_times))
                         
             elif phase_action == "check":
                 while iter < 10:
@@ -73,16 +72,24 @@ class Executor:
                     find, relative_x, relative_y = self.detector.find_location(
                     full_window, phase_template)
                     if find:
-                        logger.info("action: check, 检查完成")
+                        logger.success(" [{} - {}] check success.".format(task_name, phase_name))
                         break
                     else:
                         iter+=1
-                        logger.info("action: check, 迭代次数: {}".format(iter))
+                        logger.info(" [{} - {}] check failed, try {} times.".format(task_name, phase_name, iter))
                         sleep(0.3)
                 if iter == 10:
-                    logger.error("检查失败")
-                    raise RuntimeError("检查失败")
-            
+                    phase_type = phase.get("type")
+                    if phase_type == "strict":
+                        logger.error("严格检查失败, 将在 10 秒后结束脚本！")
+                        logger.error("请检查: ")
+                        logger.error("\t1. [活动管家] 右侧是否已选择魔神武王方案")
+                        logger.error("\t2. [日常] 是否能看到洛克寻宝")
+                        logger.error("\t3. [常驻] 是否能看到唤醒沉睡之灵")
+                        sleep(10)
+                        raise RuntimeError("检查失败")
+                    else:
+                        logger.warning("非严格检查失败, 继续执行...")
             
             elif phase_action == "finish":
                 while True:
@@ -91,7 +98,6 @@ class Executor:
                         full_window, phase_template)
                     if find:
                         # imwrite(str(iter)+".png",full_window)
-                        logger.info("action: finish, 执行完成")
+                        logger.success(" [{} - {}] task finish".format(task_name, phase_name))
                         break
                     sleep(0.3)
-                    
