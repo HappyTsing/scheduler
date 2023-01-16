@@ -37,6 +37,10 @@ def config_parser(config):
     new_tasks = {}
     task_name_list = []
     for task in tasks:
+        # on -> true, off -> false
+        enable = task.get("enable")
+        if not enable:
+            continue
         parent_phases_name = task.get("parent_phase")
         phases = task.get("phases")
         task_name = task.get("name_en")

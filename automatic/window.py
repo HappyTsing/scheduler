@@ -95,7 +95,7 @@ class Window(Process):
     def click(self, relative_x, relative_y, times, type="left"):		# left right middle
         absolute_x, absolute_y = self.get_absolute_position(
             relative_x, relative_y)
-        click(absolute_x, absolute_y, clicks=int(times), button=type)
+        click(absolute_x, absolute_y, clicks=int(times), button=type,interval=0.5)
 
     def doubleClick(self, relative_x, relative_y, type="left"):
         absolute_x, absolute_y = self.get_absolute_position(
@@ -103,7 +103,7 @@ class Window(Process):
         doubleClick(absolute_x, absolute_y, button=type)
 
     def press(self, key, times):
-        press(key, presses=times)
+        press(key, presses=times, interval=0.1)
 
     # dpi 缩放级别会影响 win32gui.GetWindowRect，故换用此实现
     # todo: 似乎没啥影响，暂时先不用这种方法

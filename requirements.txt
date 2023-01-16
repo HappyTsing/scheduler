@@ -6,3 +6,4 @@ opencv-contrib-python==4.5.3.56
 numpy==1.21.6
 pyyaml==6.0
 aircv==1.4.6
+tdqm==0.0.1
