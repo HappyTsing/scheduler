@@ -54,10 +54,13 @@ tasks:
       {id: 1, name: 宠物专区_选中, action: check},
       {id: 2, name: 本地精灵仓库, action: click, times: 1},
       {id: 3, name: 本地精灵仓库_选中, action: check},
+      {id: -1, name: 等待, action: wait, duration: 2},
       {id: 4, name: 本地精灵仓库_进入状态, action: check},
       {id: 5, name: 方案选择, action: click, times: 1},
+      {id: -1, name: 等待, action: wait, duration: 1},
       {id: -1, name: 键盘按键_fz, action: press, key: f, times: 1},
       {id: -1, name: 键盘按键_fz, action: press, key: z, times: 1},
+      {id: -1, name: 键盘按键_enter, action: press, key: enter, times: 1},
       {id: 6, name: 携带, action: click, times: 1},
       {id: 7, name: 携带完成, action: finish},
       {id: 7, name: 携带完成, action: check, type: strict},
@@ -214,13 +217,136 @@ tasks:
       phases: [
         {id: 0, name: 星辰之塔, action: click, times: 1},
         {id: 1, name: 星辰之塔_选中, action: check},
+        {id: -1, name: 等待, action: wait, duration: 1},
         {id: 2, name: 扫荡, action: click, times: 1},
+        {id: -1, name: 等待, action: wait, duration: 2},
         {id: -1, name: 键盘按键_up, action: press, key: up, times: 1},
         {id: -1, name: 键盘按键_tab, action: press, key: tab, times: 1},
         {id: -1, name: 键盘按键_left, action: press, key: left, times: 2},
         {id: -1, name: 键盘按键_enter, action: press, key: enter, times: 1},
       ]
   }
+
+
+
+  - {
+      name: 黄道十二宫,
+      name_en: zodiac_signs,
+      parent_phase: activity_area,
+      enable: on, 
+      phases: [
+        # Tip: 摩羯 、双子 请自行完成
+        # 需要等待
+        {id: 0, name: 黄道十二宫, action: click, times: 1},
+        {id: 1, name: 黄道十二宫_选中, action: check},
+        {id: 3, name: 水瓶宫, action: click, times: 1},
+        {id: 4, name: 水瓶宫_选中, action: check},
+        {id: 2, name: 水瓶宫_一阶开始, action: click, times: 1},
+        {id: 5, name: 水瓶宫_一阶结束, action: finish},
+        {id: 6, name: 白羊宫, action: click, times: 1},
+        {id: 7, name: 白羊宫_选中, action: check},
+        {id: 2, name: 白羊宫_一阶开始, action: click, times: 1},
+        {id: 8, name: 白羊宫_一阶结束, action: finish},
+        {id: 9, name: 巨蟹宫, action: click, times: 1},
+        {id: 10, name: 巨蟹宫_选中, action: check},
+        {id: 2, name: 巨蟹宫_一阶开始, action: click, times: 1},
+        {id: 11, name: 巨蟹宫_一阶结束, action: finish},
+        {id: 12, name: 狮子宫, action: click, times: 1},
+        {id: 13, name: 狮子宫_选中, action: check},
+        {id: 2, name: 狮子宫_一阶开始, action: click, times: 1},
+        {id: 14, name: 狮子宫_一阶结束, action: finish},
+        {id: 15, name: 处女宫, action: click, times: 1},
+        {id: 16, name: 处女宫_选中, action: check},
+        {id: 2, name: 处女宫_一阶开始, action: click, times: 1},
+        {id: 17, name: 处女宫_一阶结束, action: finish},
+        {id: 18, name: 天秤宫, action: click, times: 1},
+        {id: 19, name: 天秤宫_选中, action: check},
+        {id: 2, name: 天秤宫_一阶开始, action: click, times: 1},
+        {id: 20, name: 天秤宫_一阶结束, action: finish},
+        {id: 21, name: 大天使, action: click, times: 1},
+        {id: 22, name: 大天使_选中, action: check},
+        {id: 2, name: 大天使_一阶开始, action: click, times: 1},
+        {id: 23, name: 大天使_一阶结束, action: finish},
+
+        # 无需等待
+        {id: 25, name: 双鱼宫, action: click, times: 1},
+        {id: 26, name: 双鱼宫_选中, action: check},
+        {id: 24, name: 双鱼宫_一阶开始, action: click, times: 1},
+        {id: 27, name: 金牛宫, action: click, times: 1},
+        {id: 28, name: 金牛宫_选中, action: check},
+        {id: 24, name: 金牛宫_一阶开始, action: click, times: 1},
+        {id: 29, name: 天蝎宫, action: click, times: 1},
+        {id: 30, name: 天蝎宫_选中, action: check},
+        {id: 24, name: 天蝎宫_一阶开始, action: click, times: 1},
+        {id: 31, name: 射手宫, action: click, times: 1},
+        {id: 32, name: 射手宫_选中, action: check},
+        {id: 24, name: 射手宫_一阶开始, action: click, times: 1},
+      ]
+    }
+
+
+  - {
+    name: 七曜圣地,
+    name_en: seven_lights_holy_land,
+    enable: on,
+    parent_phase: activity_butler,
+    phases: [
+      {id: 0, name: 七曜圣地, action: click, times: 1},
+      {id: 1, name: 七曜圣地_选中, action: check},
+      {id: 2, name: 七曜圣地_曜日选择, action: click, times: 1},
+      {id: -1, name: 等待, action: wait, duration: 1},
+      {id: -1, name: 键盘按键_up, action: press, key: up, times: 6},
+      {id: -1, name: 七曜圣地_今日曜日, action: press, key: down, times: dayOfWeek},
+      {id: -1, name: 键盘按键_enter, action: press, key: enter, times: 1},
+      {id: 3, name: 七曜圣地_难度选择, action: click, times: 1},
+      {id: -1, name: 等待, action: wait, duration: 1},
+      {id: -1, name: 七曜圣地_困难, action: press, key: down, times: 2},
+      {id: -1, name: 键盘按键_enter, action: press, key: enter, times: 1},
+      {id: 4, name: 七曜圣地_打法选择, action: click, times: 1},
+      {id: -1, name: 等待, action: wait, duration: 1},
+      {id: -1, name: 键盘按键_up, action: press, key: up, times: 8},
+      {id: -1, name: 七曜圣地_魔武打法, action: press, key: down, times: 4},
+      {id: -1, name: 键盘按键_enter, action: press, key: enter, times: 1},
+      {id: 5, name: 七曜圣地_挑战, action: click, times: 1},
+      {id: -1, name: 七曜圣地_插槽, action: slot, name: seven_lights_holy_land}
+    ]
+  }
+
+  - {
+      name: 钻石任务,
+      name_en: diamond_mission,
+      parent_phase: activity_area,
+      enable: on,
+      phases: [
+        {id: 0, name: 钻石任务, action: click, times: 1},
+        {id: 1, name: 钻石任务_选中, action: check},
+        {id: 2, name: 开始, action: finish},
+        {id: 2, name: 开始, action: click, times: 1},
+        {id: 3, name: 开始_选中, action: check},
+        {id: 4, name: 结束状态, action: finish},
+        {id: -1, name: 钻石任务_插槽_关闭确定窗口, action: slot, name: diamond_mission},
+        {id: 5, name: 新闻, action: move},
+        {id: -1, name: 等待, action: wait, duration: 1},
+        {id: 6, name: 活动, action: click, times: 1},
+        {id: 7, name: 活动_打开, action: finish},
+        {id: 8, name: 经验, action: click, times: 1},
+        {id: 9, name: 钻石任务_启动, action: click, times: 1},
+        {id: 10, name: 钻石任务_打开, action: finish},
+        {id: 11, name: 领奖_经验1, action: click, times: 1},
+        {id: 12, name: 领奖_孵化宝典, action: click, times: 1},
+        {id: 13, name: 领奖_孵化宝典_领取完毕, action: check},
+        {id: 13, name: 领奖_孵化宝典_领取完毕, action: click, times: 1},
+        {id: 14, name: 领奖_钻石1, action: click, times: 1},
+        {id: 15, name: 领奖_钻石1_领取完毕, action: check},
+        {id: 15, name: 领奖_钻石1_领取完毕, action: click, times: 1},
+        {id: 16, name: 领奖_经验2, action: click, times: 1},
+        {id: 17, name: 领奖_钻石2, action: click, times: 1},
+        {id: 18, name: 领奖_钻石2_领取完毕, action: check},
+        {id: 18, name: 领奖_钻石2_领取完毕, action: click, times: 1},
+        {id: 19, name: 钻石任务_全部领取完毕, action: check},
+        {id: 20, name: 钻石任务_关闭, action: click, times: 1},
+        ]
+    }
 
   - {
       name: 好友庄园助手,
@@ -236,28 +362,10 @@ tasks:
         ]
     }
 
-
-
-
-  # - {
-  #     name: 钻石任务,
-  #     name_en: diamond_mission,
-  #     parent_phase: activity_area,
-  #     enable: off
-  #     phases: [
-  #       {id: 0, name: 钻石任务, action: click, times: 1},
-  #       {id: 1, name: 钻石任务_选中, action: check},
-  #       {id: 2, name: 开始, action: click, times: 1},
-  #       {id: 3, name: 开始_选中, action: check},
-  #       {id: 4, name: 结束状态, action: finish},
-  #       ]
-  #   }
-
-
   # - {
   #   name: 热门活动,
   #   name_en: hot,
-  #   enable: off
+  #   enable: on
   #   parent_phase: activity_butler,
   #   phases: [
   #     {id: 0, name: 热门, action: click, times: 1},

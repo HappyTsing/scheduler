@@ -1,11 +1,12 @@
 from automatic.window import Window
 from automatic.detector import Detector
 from automatic.config import tasks
+from automatic.slots import seven_lights_holy_land,diamond_mission
 from time import sleep
 from aircv import imread
 # from cv2 import imwrite
 from loguru import logger
-
+from datetime import datetime
 class Executor:
     def __init__(self):
         self.window = Window()
@@ -37,6 +38,7 @@ class Executor:
                         full_window, phase_template)
                     if find:
                         phase_times = phase["times"]
+
                         self.window.click(relative_x,relative_y,phase_times)
                         logger.success("[{} - {}] click success".format(task_name, phase_name))
                         break
@@ -68,6 +70,10 @@ class Executor:
             elif phase_action == "press":
                 phase_key = phase["key"]
                 phase_times = phase["times"]
+                if phase_times == "dayOfWeek":
+                    # 0~6 
+                    dayOfWeek = datetime.today().weekday()
+                    phase_times = dayOfWeek
                 self.window.press(phase_key,phase_times)
                 logger.success("[{} - {}] press {} {} times.".format(task_name, phase_name, phase_key,phase_times))
                         
@@ -86,12 +92,31 @@ class Executor:
                 if iter == 10:
                     phase_type = phase.get("type")
                     if phase_type == "strict":
-                        logger.error("strict check failed, 将在 10 秒后结束脚本！")
+                        logger.error("[{} - {}] strict check failed, 将在 10 秒后结束脚本！".format(task_name, phase_name))
                         sleep(10)
                         raise RuntimeError("检查失败")
                     else:
-                        logger.warning("normal check failed, 继续执行...")
+                        logger.warning("[{} - {}] normal check failed, continue...".format(task_name, phase_name))
+                        
+            elif phase_action == "move":
+                while iter < 3:
+                    full_window = self.window.screencap()
+                    find, relative_x, relative_y = self.detector.find_location(full_window, phase_template)
+                    if find:
+                        self.window.move(relative_x,relative_y)   
+                        logger.success("[{} - {}] move success".format(task_name, phase_name))
+                        break
+                    else:
+                        iter+=1
+                        sleep(0.5)    
+                if iter == 3:
+                    logger.warning("[{} - {}] move failed.".format(task_name, phase_name))
             
+            elif phase_action == "wait":
+                phase_time = phase.get("duration")
+                sleep(int(phase_time))
+                logger.success("[{} - {}] wait {} seconds success".format(task_name, phase_name, phase_time))
+                    
             elif phase_action == "finish":
                 logger.info("[{} - {}] waiting finish...".format(task_name, phase_name))
                 while True:
@@ -103,3 +128,10 @@ class Executor:
                         logger.success("[{} - {}] task finish success".format(task_name, phase_name))
                         break
                     sleep(0.5)
+            elif phase_action == "slot":
+                logger.info("[{} - {}] 转交给自定义插槽执行".format(task_name, phase_name))
+                phase_name = phase.get("name")
+                if phase_name == "seven_lights_holy_land":
+                    seven_lights_holy_land(self.window,self.detector)
+                elif phase_name == "diamond_mission":
+                    diamond_mission(self.window,self.detector)

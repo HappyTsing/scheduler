@@ -12,7 +12,7 @@ else:
     CUR_PATH = path.dirname(path.abspath(__file__))
     
 CONFIG_PATH = path.join(CUR_PATH,"config.yaml")
-IMAGE_PATH = path.join(CUR_PATH,"img")
+IMG_PATH = path.join(CUR_PATH,"img")
 
 # 获取屏幕分辨率
 screen = tkinter.Tk()
@@ -20,8 +20,8 @@ x = screen.winfo_screenwidth()
 y = screen.winfo_screenheight()
 screen.destroy()
 logger.info('屏幕分辨率: ({},{})'.format(x, y))
-IMG_PATH = path.join(CUR_PATH, "img", "{}_{}".format(x,y))
-if not path.exists(IMG_PATH):
+IMAGE_PATH = path.join(IMG_PATH, "{}_{}".format(x,y))
+if not path.exists(IMAGE_PATH):
     logger.error("未适配当前分辨率，请自行添加模板图片!")
 else:
     logger.success("当前屏幕分辨率已适配!")
@@ -58,13 +58,15 @@ def config_parser(config):
                 is_parent = True
 
             for phase in phases:
+                phase_id = phase['id']
                 template = path.join(
-                    IMG_PATH, dir_name, task_name, str(phase['id'])+".png")
+                    IMAGE_PATH, dir_name, task_name, str(phase_id)+".png")
                 new_phase = {}
                 new_phase.update(phase)
                 new_phase.pop("id")
-                if phase['action'] != "press":
+                if phase_id >= 0:
                     new_phase["template"] = template
+                    
                 # new_phase = {
                 #     "name": phase['name'],
                 #     "action": phase['action'],
