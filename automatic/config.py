@@ -86,6 +86,8 @@ def config_parser(config):
             "name_en": task.get("name_en"),
             "phases": new_phases
         }
+        if task.get("schedule") != None:
+            new_task["schedule"] =  task.get("schedule")
         new_tasks[task.get("name_en")] = new_task
     return new_tasks,task_name_list
 

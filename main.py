@@ -12,7 +12,7 @@ from tqdm import tqdm
 from datetime import datetime
 from math import floor
 CUR_PATH = path.dirname(path.realpath(argv[0]))
-LOG_PATH = path.join(CUR_PATH,"roco.log")
+LOG_PATH = path.join(CUR_PATH,"scheduler.log")
 logger.add(LOG_PATH)
 
 def main():

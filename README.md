@@ -1,40 +1,29 @@
-# roco
+# 自定义定时任务
 
-虽然洛克王国的任务可以使用悟空辅助解决，但仍旧需要等待任务完成才能进行下一个任务，令人苦恼！
+通过图像识别，可自定义定时任务，只需要在 `img` 中添加自己的任务文件夹，并放置需要的图片，随后在 `config.yaml`，中配置识别流程，即可轻松自定义定时任务！
 
+目前支持的操作如下：
 
-本脚本正是为了解决该问题而存在，通过图像识别自动等待任务结束，一键完成诸多功能，通过简单配置 `config.yaml` 文件和相对应的 `\img`，还可以自定义更多功能。
-
-
-## Prepare
-
-首先在本地精灵仓库配置好名为 **fz** 的队伍，首发精灵必须为 **魔神武王**，其余五个请选择双攻尽可能高的宠物。
-
-
-## Usage
-
-
-解压缩 release 的文件夹，打开 `悟空神辅`，双击 `main_boxed.exe`，脚本将自动依次执行：
-
-1.  【双攻大队-魔神武王】 自动切换队伍
-2.  【日常任务】 
-3.  【常驻任务】 
-4.  【取物助手】
-5.  【星辰之塔】
-6.  【黄道十二宫 一阶】
-7.  【七曜圣地】
-8.  【失落之塔】
-9.  【钻石任务】
-10. 【好友庄园助手】
-
-若不想执行某条任务，编辑 `config.yaml -> tasks`，将对应的任务设置为 `enable: off` 即可。
-
-支持的屏幕分辨率：
-
-- `1920*1080`
-- `1360*768`，
-
-其余分辨率需要自行截图，并替代 `\img` 中对应的图片。
+```yaml
+  - {
+    name: 示例,
+    name_en: example,
+    enable: off,
+    parent_phase: daily_activity,
+    schedule: 12:12:12,
+    phases: [
+      {id: -1, name: 等待 n 秒, action: wait, duration: n},
+      {id: 1, name: 移动鼠标, action: move},
+      {id: 1, name: 点击 n 次, action: click, times: n},
+      {id: 1, name: 双击, action: doubleClick},
+      {id: -1, name: 键盘按键 n 次, action: press, key: down（任意按键）, times: n},
+      {id: 1, name: 检查，等待几秒查看是否识别，检查失败不退出, action: check},
+      {id: 1, name: 严格检查，检查失败会退出, action: check, action: strict},
+      {id: 1, name: 等待至成功识别, action: finish},
+    ]
+  }
+```
+其中 `id` 为图像名称，例如 `1.png`，更多细节请查看 `config.yaml`。
 
 ## Quick start
 
@@ -44,6 +33,8 @@
 # python 3.8.10
 
 # pytorch https://pytorch.org/get-started/locally/
+
+python -m virtualenv venv
 
 pip3 install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
 

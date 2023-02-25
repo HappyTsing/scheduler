@@ -7,3 +7,4 @@ numpy==1.21.6
 pyyaml==6.0
 aircv==1.4.6
 tdqm==0.0.1
+pillow==9.4.0

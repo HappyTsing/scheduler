@@ -1,8 +1,8 @@
 from automatic.window import Window
 from automatic.detector import Detector
 from automatic.config import tasks
-from automatic.slots import seven_lights_holy_land,diamond_mission
-from time import sleep
+# from automatic.slots import seven_lights_holy_land,diamond_mission
+from time import sleep,strftime,gmtime
 from aircv import imread
 # from cv2 import imwrite
 from loguru import logger
@@ -12,17 +12,21 @@ class Executor:
         self.window = Window()
         self.detector = Detector()
         
-    # def test(self):
-    #     while True:
-    #         full_window = self.window.screencap()
-    #         template = imread("c:\\Users\\leki\\Desktop\\roco-master\\automatic\\img\\tasks\\friend_manor_assistant\\4.png")
-    #         self.detector.find_location(full_window,template)
-    #         sleep(0.3)
-    
+    def scheduler(self,task_name, task_schedule):
+        now = datetime.now()
+        schedule_hour,schedule_minute,schedule_second = str(task_schedule).split(":")
+        schedule = datetime(year=now.year,month=now.month,day= now.day,hour=int(schedule_hour),minute=int(schedule_minute),second=int(schedule_second))
+        wait = schedule - now
+        logger.info("[{}] 将在 {} 后自动开始, 等待中...".format(task_name,strftime("%H:%M:%S", gmtime(wait.seconds))))
+        sleep(wait.seconds)
+
     def submit(self, task_name):
         task = tasks.get(task_name)
         task_name = task["name"]
         logger.info("当前任务: {}".format(task_name))
+        task_schedule = task.get("schedule")
+        if task_schedule != None:
+            self.scheduler(task_name, task_schedule)
         phases = task["phases"]
         for phase in phases:
             phase_action = phase["action"]
@@ -128,10 +132,10 @@ class Executor:
                         logger.success("[{} - {}] task finish success".format(task_name, phase_name))
                         break
                     sleep(0.5)
-            elif phase_action == "slot":
-                logger.info("[{} - {}] 转交给自定义插槽执行".format(task_name, phase_name))
-                phase_name = phase.get("name")
-                if phase_name == "seven_lights_holy_land":
-                    seven_lights_holy_land(self.window,self.detector)
-                elif phase_name == "diamond_mission":
-                    diamond_mission(self.window,self.detector)
+            # elif phase_action == "slot":
+            #     logger.info("[{} - {}] 转交给自定义插槽执行".format(task_name, phase_name))
+            #     phase_name = phase.get("name")
+            #     if phase_name == "seven_lights_holy_land":
+            #         seven_lights_holy_land(self.window,self.detector)
+            #     elif phase_name == "diamond_mission":
+            #         diamond_mission(self.window,self.detector)
