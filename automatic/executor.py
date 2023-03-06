@@ -35,27 +35,26 @@ class Executor:
                 phase_template = imread(phase.get("template"))
             iter = 0
             if phase_action == "click":
-                while iter < 3:
+                while iter < 5:
                     full_window = self.window.screencap()
                     # imwrite(str(iter)+".png",full_window)
                     find, relative_x, relative_y = self.detector.find_location(
                         full_window, phase_template)
                     if find:
                         phase_times = phase["times"]
-
                         self.window.click(relative_x,relative_y,phase_times)
-                        logger.success("[{} - {}] click success".format(task_name, phase_name))
+                        logger.success("[{} - {}] click x: {} y: {} success".format(task_name, phase_name,relative_x, relative_y))
                         break
                     else:
                         # 检查是否已经check
                         iter+=1
                         # logger.info(" [{} - {}] click failed: not found, try {} times.".format(task_name, phase_name, iter))
                         sleep(0.5)
-                if iter == 3:
+                if iter == 5:
                     logger.warning("[{} - {}] click failed, please check if clicked.".format(task_name, phase_name))
 
             elif phase_action == "doubleClick":
-                while iter < 3:
+                while iter < 5:
                     full_window = self.window.screencap()
                     find, relative_x, relative_y = self.detector.find_location(
                         full_window, phase_template)
@@ -68,7 +67,7 @@ class Executor:
                         iter+=1
                         # logger.info("[{} - {}] doubleClick failed: not found, try {} times.".format(task_name, phase_name, iter))
                         sleep(0.5)    
-                if iter == 3:
+                if iter == 5:
                     logger.warning("[{} - {}] doubleClick failed, please check if clicked.".format(task_name, phase_name))
         
             elif phase_action == "press":
