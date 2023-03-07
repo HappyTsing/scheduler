@@ -12,7 +12,7 @@ tasks:
     name: 赛尔号定时日常,
     name_en: seer,
     enable: on,
-    # schedule: "12:58:10",
+    schedule: "00:02:10",
     phases: [
       {id: -1, name: 等待, action: wait, duration: 2},
       {id: 1, name: 菜单, action: click, times: 1},

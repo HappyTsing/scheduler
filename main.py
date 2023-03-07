@@ -23,6 +23,7 @@ def main():
 |   __|  |  . `  | .--.  |  | |  |  |  |   \_    _/
 |  |____ |  |\   | |  `--'  | |  `--'  |     |  |
 |_______||__| \__|  \______/   \______/      |__|""")
+    logger.info("Author: happytsing\tVersion: 1.0")
     start = datetime.now()
     executor = Executor()
     with tqdm(total=len(task_name_list)) as pbar:

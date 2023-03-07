@@ -27,6 +27,11 @@ class Executor:
         task_schedule = task.get("schedule")
         if task_schedule != None:
             self.scheduler(task_name, task_schedule)
+            # 长时间等待似乎会识别错误，消耗几张图片试试
+            for i in range(3):
+                # logger.info("消耗:{}".format(i))
+                _full_indow = self.window.screencap()
+                
         phases = task["phases"]
         for phase in phases:
             phase_action = phase["action"]
