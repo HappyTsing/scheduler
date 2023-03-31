@@ -17,9 +17,11 @@
       {id: 1, name: 点击 n 次, action: click, times: n},
       {id: 1, name: 双击, action: doubleClick},
       {id: -1, name: 键盘按键 n 次, action: press, key: down（任意按键）, times: n},
+      {id: -1, name: 热键, action: hotkey, keys: ["winleft","d"]},
       {id: 1, name: 检查，等待几秒查看是否识别，检查失败不退出, action: check},
       {id: 1, name: 严格检查，检查失败会退出, action: check, action: strict},
       {id: 1, name: 等待至成功识别, action: finish},
+      {id: -1, name: 插槽(需要修改源码), action: slot, handler: function_name_in_slots},
     ]
   }
 ```

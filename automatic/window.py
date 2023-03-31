@@ -1,5 +1,5 @@
 # -*-coding:UTF-8 -*-
-from pyautogui import click,press,doubleClick,moveTo,screenshot as pyautogui_screenshot
+from pyautogui import click,press,hotkey,doubleClick,moveTo,screenshot as pyautogui_screenshot
 # from win32gui import EnumWindows, GetClassName, SendMessage, SetForegroundWindow, GetWindowRect, GetWindowText, DeleteObject, GetWindowDC
 # from win32ui import CreateBitmap,CreateDCFromHandle
 # from win32con import WM_SYSCOMMAND,SC_RESTORE
@@ -73,3 +73,6 @@ class Window(Process):
 
     def press(self, key, times):
         press(key, presses=times, interval=0.1)
+    
+    def hotkey(self,*keys):
+        hotkey(*keys)

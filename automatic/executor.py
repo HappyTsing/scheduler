@@ -1,7 +1,7 @@
 from automatic.window import Window
 from automatic.detector import Detector
 from automatic.config import tasks
-# from automatic.slots import seven_lights_holy_land,diamond_mission
+from automatic.slots import seer_login
 from time import sleep,strftime,gmtime
 from aircv import imread
 # from cv2 import imwrite
@@ -84,7 +84,12 @@ class Executor:
                     phase_times = dayOfWeek
                 self.window.press(phase_key,phase_times)
                 logger.success("[{} - {}] press {} {} times.".format(task_name, phase_name, phase_key,phase_times))
-                        
+            
+            elif phase_action == "hotkey":
+                phase_keys = phase["keys"]
+                self.window.hotkey(*phase_keys)
+                logger.success("[{} - {}] press {} success".format(task_name, phase_name, phase_keys))
+                
             elif phase_action == "check":
                 while iter < 10:
                     full_window = self.window.screencap()
@@ -136,10 +141,8 @@ class Executor:
                         logger.success("[{} - {}] task finish success".format(task_name, phase_name))
                         break
                     sleep(0.5)
-            # elif phase_action == "slot":
-            #     logger.info("[{} - {}] 转交给自定义插槽执行".format(task_name, phase_name))
-            #     phase_name = phase.get("name")
-            #     if phase_name == "seven_lights_holy_land":
-            #         seven_lights_holy_land(self.window,self.detector)
-            #     elif phase_name == "diamond_mission":
-            #         diamond_mission(self.window,self.detector)
+            elif phase_action == "slot":
+                logger.info("[{} - {}] 转交给自定义插槽执行".format(task_name, phase_name))
+                phase_handler = phase.get("handler")
+                if phase_handler == "seer_login":
+                    seer_login(self.window,self.detector)
