@@ -1,0 +1,127 @@
+{
+  "seer": {
+    "schedule": false,
+    "phases": [
+      {
+        "comment": "等待 2 秒",
+        "action": "wait",
+        "duration": 2
+      },
+      {
+        "comment": "最小化所有窗口",
+        "action": "hotkey",
+        "keys": ["winleft", "d"]
+      },
+      {
+        "comment": "双击 CHIKA.exe",
+        "img_id": 1,
+        "action": "doubleClick"
+      },
+      {
+        "comment": "等待系统公告",
+        "img_id": 2,
+        "action": "finish"
+      },
+      {
+        "comment": "取消公告激活状态",
+        "img_id": 12,
+        "action": "click"
+      },
+      {
+        "comment": "关闭系统公告",
+        "img_id": 13,
+        "action": "click"
+      },
+      {
+        "comment": "等待开始界面",
+        "img_id": 3,
+        "action": "finish"
+      },
+      {
+        "comment": "点击开始",
+        "img_id": 3,
+        "action": "click"
+      },
+      {
+        "comment": "等待选择账号",
+        "img_id": 4,
+        "action": "finish"
+      },
+      {
+        "comment": "选择 Forever 猎狐",
+        "img_id": 4,
+        "action": "click"
+      },
+      {
+        "comment": "登录",
+        "img_id": 6,
+        "action": "slot",
+        "handler": "seer_login"
+      },
+      {
+        "comment": "选择服务器",
+        "img_id": 7,
+        "action": "click"
+      },
+      {
+        "comment": "等待进入游戏",
+        "img_id": 8,
+        "action": "finish"
+      },
+      {
+        "comment": "等待",
+        "action": "wait",
+        "duration": 2
+      },
+      {
+        "comment": "选择脚本",
+        "img_id": 9,
+        "action": "click"
+      },
+      {
+        "comment": "等待一件日常",
+        "img_id": 10,
+        "action": "finish"
+      },
+      {
+        "comment": "点击一件日常",
+        "img_id": 10,
+        "action": "click"
+      },
+      {
+        "comment": "等待一件日常窗口弹出",
+        "img_id": 11,
+        "action": "finish"
+      },
+      {
+        "comment": "开始一件日常",
+        "img_id": 11,
+        "action": "click"
+      },
+      {
+        "comment": "等待贪婪洞窟",
+        "img_id": 14,
+        "action": "finish"
+      },
+      {
+        "comment": "开始贪婪洞窟",
+        "img_id": 15,
+        "action": "click"
+      },
+      {
+        "img_id": 1,
+        "action": "loop",
+        "index": "index_1"
+      }
+    ],
+    "loops": {
+      "index_1": [
+        {
+          "img_id": 1,
+          "action": "loop",
+          "index": "index_1"
+        }
+      ]
+    }
+  }
+}

@@ -1,29 +1,30 @@
-from automatic.window import Window
-from automatic.detector import Detector
-from automatic.config import IMAGE_PATH
+from automatic.observer import Observer
 from aircv import imread
 from time import sleep
 from loguru import logger
 from os import path
+from automatic.utils import *
 
-def seer_login(window:Window, detector:Detector):
-    TEMPLATE_PATH = path.join(IMAGE_PATH,"tasks","seer")
+
+def seer_login(observer:Observer):
+    CUR_PATH = get_current_path()
+    TEMPLATE_PATH = path.join(CUR_PATH,"img","seer","phases")
     TEMPLATE_LOGIN_SUCCESS = imread(path.join(TEMPLATE_PATH,"7.png"))
     TEMPLATE_LOGIN_NORMAL = imread(path.join(TEMPLATE_PATH,"5.png"))
     TEMPLATE_LOGIN_SELECT = imread(path.join(TEMPLATE_PATH,"6.png"))
     while True:
-        full_window = window.screencap()
-        find_success, x0, y0 = detector.find_location(full_window, TEMPLATE_LOGIN_SUCCESS)
-        find_normal, x1, y1 = detector.find_location(full_window, TEMPLATE_LOGIN_NORMAL)
-        find_select, x2, y2 = detector.find_location(full_window, TEMPLATE_LOGIN_SELECT)
+        current_screenshot = observer.get_screeshot()
+        find_success, x0, y0 = find_location(current_screenshot, TEMPLATE_LOGIN_SUCCESS)
+        find_normal, x1, y1 = find_location(current_screenshot, TEMPLATE_LOGIN_NORMAL)
+        find_select, x2, y2 = find_location(current_screenshot, TEMPLATE_LOGIN_SELECT)
         if find_success:
             logger.success("[slot: seer_login] 成功登录")
             break
         elif find_normal:
-            window.click(x1,y1,1)
+            click(x1,y1,1)
             logger.info("[slot: seer_login] 尝试点击未激活登录图标")
         elif find_select:
-            window.click(x2,y2,1)
+            click(x2,y2,1)
             logger.info("[slot: seer_login] 尝试点击激活登录图标")
             break
         sleep(1.5)
