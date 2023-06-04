@@ -56,8 +56,15 @@ pyinstaller -F main.py
 上述方式打包后运行较慢，建议采用 `-D` 打包多文件，再使用 [Enigma Virtual Box](https://enigmaprotector.com/en/downloads.html) 将其压缩为可执行文件。
 
 ```sh
+# 1. pyinstaller
 pyinstaller -D main.py
-# Enigma Virtual Box  再次压缩
+
+# 2. Enigma Virtual Box  再次压缩
+# Enter Input File Name
+dist\main\main.exe
+
+# Drag files and folders to the Virtual Box Files tree
+add folder recursive -> dist -> main
 ```
 
 # update

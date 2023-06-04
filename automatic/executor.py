@@ -105,12 +105,8 @@ class Executor:
                 self.observer.get_screeshot()
                 
         for phase in phases:
-            img_path = phase.get("img_path")
-            if img_path:
-                if path.exists(img_path):
-                    target_image = imread(img_path)
-                else:
-                    logger.error("file: {} does not exist".format(img_path))
+            if "img_path" in phase:
+                target_image = imread(phase.get("img_path"))
             duration= phase.get("duration")
             key = phase.get("key")
             keys = phase.get("keys")

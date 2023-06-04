@@ -21,7 +21,7 @@ def print_hello():
 def get_current_path():
     if getattr(sys,'frozen',False):
         # pyinstaller
-        CUR_PATH = path.dirname(path.dirname(path.realpath(sys.argv[0])))
+        CUR_PATH = path.dirname(path.realpath(sys.argv[0]))
     else:
         CUR_PATH = path.dirname(path.dirname(path.abspath(__file__)))
     return CUR_PATH
@@ -32,10 +32,15 @@ def get_img_path(id,task_name):
     IMG_PATH = path.join(CUR_PATH,"img")
     return path.join(IMG_PATH,task_name,"phases","{}.png".format(id))
     
-
+'''
+@return: config/None
+'''
 def get_config():
     CUR_PATH = get_current_path()
     CONFIG_PATH = path.join(CUR_PATH,"task.json")
+    if not path.exists(CONFIG_PATH):
+        logger.error("config file: {} does not exist.".format(CONFIG_PATH))
+        return None
     with open(CONFIG_PATH, 'r',encoding="utf8") as f:
         config = json.load(f)
     # print(config)
@@ -46,9 +51,15 @@ def get_config():
         phases_new = []
         for phase in phases:
             if "img_id" in phase:
-                phase["img_path"] = get_img_path(phase["img_id"],task_name)
+                img_path=get_img_path(phase["img_id"],task_name)
+                if img_path:
+                    if path.exists(img_path):
+                        phase["img_path"] = img_path
+                    else:
+                        logger.error("img file: {} does not exist.".format(img_path))
+                        return None
                 phase.pop("img_id")
-            print(phase)
+            # print(phase)
             phases_new.append(phase)
         config_preprocessed[task_name]["phases"] = phases_new
         

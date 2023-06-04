@@ -11,6 +11,7 @@ from datetime import datetime
 from math import floor
 import traceback
 from automatic.utils import *
+from time import sleep
 CUR_PATH = path.dirname(path.realpath(argv[0]))
 LOG_PATH = path.join(CUR_PATH,"scheduler.log")
 logger.add(LOG_PATH)
@@ -25,6 +26,7 @@ def main():
     try:
         executor.submit(task["seer"])
     except Exception as e:
+        sleep(5)
         traceback.print_exc()
         logger.error(e)
     end = datetime.now()
