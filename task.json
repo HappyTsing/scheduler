@@ -13,105 +13,229 @@
         "keys": ["winleft", "d"]
       },
       {
-        "comment": "双击 CHIKA.exe",
-        "img_id": 1,
-        "action": "doubleClick"
+        "comment": "打开雷小伊脱机日常",
+        "path": "C:\\Users\\59376\\Desktop\\雷伊脱机\\雷小伊脱机日常.*.exe",
+        "action": "open"
       },
       {
-        "comment": "等待系统公告",
+        "comment": "等待确定弹出",
+        "img_id": 1,
+        "action": "finish"
+      },
+      {
+        "comment": "点击确定",
+        "img_id": 1,
+        "action": "click"
+      },
+      {
+        "comment": "选择账号",
         "img_id": 2,
         "action": "finish"
       },
       {
-        "comment": "取消公告激活状态",
-        "img_id": 12,
+        "comment": "开始选择账号",
+        "img_id": 2,
         "action": "click"
       },
       {
-        "comment": "关闭系统公告",
-        "img_id": 13,
-        "action": "click"
-      },
-      {
-        "comment": "等待开始界面",
+        "comment": "等待账号列表",
         "img_id": 3,
+        "action": "finish"
+      },
+      {
+        "comment": "选择 180937687",
+        "img_id": 3,
+        "action": "click"
+      },
+      {
+        "comment": "确认已选中",
+        "img_id": 4,
+        "action": "finish"
+      },
+      {
+        "comment": "点击登录",
+        "img_id": 5,
+        "action": "click"
+      },
+      {
+        "comment": "登录成功",
+        "img_id": 9,
         "action": "finish"
       },
       {
         "comment": "点击开始",
-        "img_id": 3,
+        "img_id": 6,
+        "action": "click"
+      },
+      {
+        "comment": "等待 180937687 执行完毕",
+        "img_id": 7,
+        "action": "finish"
+      },
+      {
+        "comment": "选择账号",
+        "img_id": 2,
+        "action": "finish"
+      },
+      {
+        "comment": "开始选择账号",
+        "img_id": 2,
+        "action": "click"
+      },
+      {
+        "comment": "等待账号列表",
+        "img_id": 8,
+        "action": "finish"
+      },
+      {
+        "comment": "选择 814850289",
+        "img_id": 8,
+        "action": "click"
+      },
+      {
+        "comment": "确认已选中",
+        "img_id": 10,
+        "action": "finish"
+      },
+      {
+        "comment": "点击登录",
+        "img_id": 5,
+        "action": "click"
+      },
+      {
+        "comment": "登录成功",
+        "img_id": 9,
+        "action": "finish"
+      },
+      {
+        "comment": "点击开始",
+        "img_id": 6,
+        "action": "click"
+      },
+      {
+        "comment": "等待 814850289 执行完毕",
+        "img_id": 7,
+        "action": "finish"
+      },
+      {
+        "comment": "关闭雷小伊脱机日常",
+        "img_id": 11,
+        "action": "click"
+      },
+      {
+        "comment": "等待 2 秒",
+        "action": "wait",
+        "duration": 2
+      },
+      {
+        "comment": "最小化所有窗口",
+        "action": "hotkey",
+        "keys": ["winleft", "d"]
+      },
+      {
+        "comment": "打开 CHIKA 登录器",
+        "path": "C:\\Users\\59376\\Desktop\\CHIKA\\CHIKA登录器.*.exe",
+        "action": "open"
+      },
+      {
+        "comment": "等待系统公告",
+        "img_id": 21,
+        "action": "finish"
+      },
+      {
+        "comment": "取消公告激活状态",
+        "img_id": 22,
+        "action": "click"
+      },
+      {
+        "comment": "关闭系统公告",
+        "img_id": 23,
+        "action": "click"
+      },
+      {
+        "comment": "等待开始界面",
+        "img_id": 24,
+        "action": "finish"
+      },
+      {
+        "comment": "点击开始",
+        "img_id": 24,
         "action": "click"
       },
       {
         "comment": "等待选择账号",
-        "img_id": 4,
+        "img_id": 26,
         "action": "finish"
       },
       {
         "comment": "选择 Forever 猎狐",
-        "img_id": 4,
+        "img_id": 26,
         "action": "click"
       },
       {
         "comment": "登录",
-        "img_id": 6,
         "action": "slot",
         "handler": "seer_login"
       },
       {
         "comment": "选择服务器",
-        "img_id": 7,
+        "img_id": 29,
         "action": "click"
       },
       {
         "comment": "等待进入游戏",
-        "img_id": 8,
+        "img_id": 30,
         "action": "finish"
       },
       {
         "comment": "等待",
         "action": "wait",
-        "duration": 2
+        "duration": 8
       },
       {
         "comment": "选择脚本",
-        "img_id": 9,
+        "img_id": 31,
         "action": "click"
       },
       {
         "comment": "等待一件日常",
-        "img_id": 10,
+        "img_id": 32,
         "action": "finish"
       },
       {
         "comment": "点击一件日常",
-        "img_id": 10,
+        "img_id": 32,
         "action": "click"
       },
       {
         "comment": "等待一件日常窗口弹出",
-        "img_id": 11,
+        "img_id": 33,
         "action": "finish"
       },
       {
         "comment": "开始一件日常",
-        "img_id": 11,
+        "img_id": 33,
         "action": "click"
       },
       {
-        "comment": "等待贪婪洞窟",
-        "img_id": 14,
+        "comment": "自定义完成",
+        "img_id": 34,
         "action": "finish"
       },
       {
-        "comment": "开始贪婪洞窟",
-        "img_id": 15,
-        "action": "click"
+        "comment": "堕落泰坦",
+        "img_id": 35,
+        "action": "finish"
       },
       {
-        "img_id": 1,
-        "action": "loop",
-        "index": "index_1"
+        "comment": "天蛇太祖完",
+        "img_id": 36,
+        "action": "finish"
+      },
+      {
+        "comment": "一件钻石日常",
+        "img_id": 37,
+        "action": "finish"
       }
     ],
     "loops": {

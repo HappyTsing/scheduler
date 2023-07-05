@@ -9,9 +9,9 @@ from automatic.utils import *
 def seer_login(observer:Observer):
     CUR_PATH = get_current_path()
     TEMPLATE_PATH = path.join(CUR_PATH,"img","seer","phases")
-    TEMPLATE_LOGIN_SUCCESS = imread(path.join(TEMPLATE_PATH,"7.png"))
-    TEMPLATE_LOGIN_NORMAL = imread(path.join(TEMPLATE_PATH,"5.png"))
-    TEMPLATE_LOGIN_SELECT = imread(path.join(TEMPLATE_PATH,"6.png"))
+    TEMPLATE_LOGIN_SUCCESS = imread(path.join(TEMPLATE_PATH,"29.png"))
+    TEMPLATE_LOGIN_NORMAL = imread(path.join(TEMPLATE_PATH,"27.png"))
+    TEMPLATE_LOGIN_SELECT = imread(path.join(TEMPLATE_PATH,"28.png"))
     while True:
         current_screenshot = observer.get_screeshot()
         find_success, x0, y0 = find_location(current_screenshot, TEMPLATE_LOGIN_SUCCESS)

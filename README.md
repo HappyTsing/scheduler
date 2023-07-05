@@ -14,8 +14,9 @@
       {"comment": "单击", "img_id": 1, "action": "click","times":2},
       {"comment": "双击", "img_id": 1,"action": "doubleClick","times":2},
       {"comment": "等待完成", "img_id": 2,"action": "finish"},
-      {"comment": "插槽", "img_id": 3,"action": "slot","handler": "seer_login"},
-      {"comment":"循环", "img_id": 4,"action": "loop","index": "index_1","times":2}
+      {"comment": "插槽", "action": "slot","handler": "seer_login"},
+      {"comment": "循环", "img_id": 4,"action": "loop","index": "index_1","times":2}
+      {"comment": "打开 exe", "action": "open","path": "/path/to/file_name_reg.*.exe"}
     ],
     "loops": {
       "index_1": [
@@ -64,7 +65,9 @@ pyinstaller -D main.py
 dist\main\main.exe
 
 # Drag files and folders to the Virtual Box Files tree
-add folder recursive -> dist -> main
+add folder recursive -> dist\main
+
+# Process
 ```
 
 # update

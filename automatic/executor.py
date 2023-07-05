@@ -7,7 +7,8 @@ from aircv import imread
 from loguru import logger
 from datetime import datetime
 from automatic.utils import *
-from os import path
+from os import path, listdir, system, rename
+from re import search
 class Executor:
     def __init__(self):
         self.observer = Observer()
@@ -92,7 +93,22 @@ class Executor:
             seer_login(self.observer)
             return True
         return False
-
+    
+    def open_app(self,full_path):
+        dir_path = path.dirname(full_path)
+        # 文件名可以是正则表达式
+        file_name_reg = path.basename(full_path)
+        files_list = listdir(dir_path)
+        for file_name in files_list:
+            # 返回第一个正则匹配的软件
+            if search(file_name_reg,file_name):
+                # logger.info("匹配成功：{}".format(file_name))
+                app_path  = path.join(dir_path,file_name)
+                cmd = "start \"\" \"{}\"".format(app_path)
+                # logger.info(cmd)
+                system(cmd)
+                return True
+        return False
                 
     def submit(self,task):
         
@@ -111,6 +127,7 @@ class Executor:
             key = phase.get("key")
             keys = phase.get("keys")
             times = phase.get("times")
+            path = phase.get("path")
             if not times:
                 times = 1
             handler = phase.get("handler")
@@ -156,5 +173,10 @@ class Executor:
                     logger.success("{} success".format(comment))
                 else:
                     logger.error("{} failed".format(comment))
-                    
-                
+            elif action == "open":
+                if self.open_app(path):
+                    logger.success("{} success".format(comment))
+                else:
+                    logger.error("{} failed".format(comment))
+            else:
+                logger.error ("action not found: {}".format(action))

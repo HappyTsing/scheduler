@@ -15,7 +15,7 @@ def print_hello():
 |   __|  |  . `  | .--.  |  | |  |  |  |   \_    _/
 |  |____ |  |\   | |  `--'  | |  `--'  |     |  |
 |_______||__| \__|  \______/   \______/      |__|""")
-    print("\n\tAuthor: HappyTsing\tVersion: 2.0\n")
+    print("\nAuthor: HappyTsing\tVersion: 3.0\t Date: 20230705\n")
 
 
 def get_current_path():
