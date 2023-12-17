@@ -1,5 +1,4 @@
-# -*-coding:UTF-8 -*-
-from pyautogui import click as py_click,press as py_press,hotkey as py_hotkey,doubleClick as py_doubleClick,moveTo
+from pyautogui import click as py_click, press as py_press, hotkey as py_hotkey, doubleClick as py_doubleClick, moveTo
 from aircv import find_template
 from loguru import logger
 import json
@@ -8,18 +7,11 @@ import sys
 
 
 def print_hello():
-    print("""
- _______ .__   __.        __    ______   ____    ____
-|   ____||  \ |  |       |  |  /  __  \  \   \  /   /
-|  |__   |   \|  |       |  | |  |  |  |  \   \/   /
-|   __|  |  . `  | .--.  |  | |  |  |  |   \_    _/
-|  |____ |  |\   | |  `--'  | |  `--'  |     |  |
-|_______||__| \__|  \______/   \______/      |__|""")
-    print("\nAuthor: HappyTsing\tVersion: 3.0\t Date: 20230705\n")
+    print("Author: HappyTsing\tVersion: 4.0\t Date: 2023.12.17\n")
 
 
 def get_current_path():
-    if getattr(sys,'frozen',False):
+    if getattr(sys, 'frozen', False):
         # pyinstaller
         CUR_PATH = path.dirname(path.realpath(sys.argv[0]))
     else:
@@ -27,59 +19,72 @@ def get_current_path():
     return CUR_PATH
 
 
-def get_img_path(id,task_name):
+def get_img_path(image_name, type="phases"):
     CUR_PATH = get_current_path()
-    IMG_PATH = path.join(CUR_PATH,"img")
-    return path.join(IMG_PATH,task_name,"phases","{}.png".format(id))
-    
+    IMG_PATH = path.join(CUR_PATH, "img")
+    if type == "phases":
+        img_path = path.join(IMG_PATH, "phases", "{}.png".format(image_name))
+    elif type == "errors":
+        img_path = path.join(IMG_PATH, "errors", "{}.png".format(image_name))
+    elif type == "loops":
+        img_path = path.join(IMG_PATH, "loops", "{}.png".format(image_name))
+    else:
+        raise
+    if not path.exists(img_path):
+        logger.error("img file: {} does not exist.".format(img_path))
+        raise
+    return img_path
+
+
 '''
 @return: config/None
 '''
-def get_config():
-    CUR_PATH = get_current_path()
-    CONFIG_PATH = path.join(CUR_PATH,"task.json")
-    if not path.exists(CONFIG_PATH):
-        logger.error("config file: {} does not exist.".format(CONFIG_PATH))
-        return None
-    with open(CONFIG_PATH, 'r',encoding="utf8") as f:
-        config = json.load(f)
-    # print(config)
-    config_preprocessed = config
-    for task_name,task in config.items():
-        phases = task.get("phases")
-        loops = task.get("loops")
-        phases_new = []
-        for phase in phases:
-            if "img_id" in phase:
-                img_path=get_img_path(phase["img_id"],task_name)
-                if img_path:
-                    if path.exists(img_path):
-                        phase["img_path"] = img_path
-                    else:
-                        logger.error("img file: {} does not exist.".format(img_path))
-                        return None
-                phase.pop("img_id")
-            # print(phase)
-            phases_new.append(phase)
-        config_preprocessed[task_name]["phases"] = phases_new
-        
-        for loop_name,loop_phases in loops.items():
-            loop_phase_new =[]
-            for loop_phase in loop_phases:
-                if "img_id" in loop_phase:
-                    loop_phase["img_path"] = get_img_path(loop_phase["img_id"],task_name)
-                    loop_phase.pop("img_id")
-                loop_phase_new.append(phase)
-            config_preprocessed[task_name]["loops"][loop_name] = loop_phase_new
-    # logger.info(config_preprocessed)
-    return config_preprocessed
 
+
+def get_task():
+    CUR_PATH = get_current_path()
+    TASK_PATH = path.join(CUR_PATH, "task.json")
+    if not path.exists(TASK_PATH):
+        logger.error("config file: {} does not exist.".format(TASK_PATH))
+        return None
+    with open(TASK_PATH, 'r', encoding="utf8") as f:
+        task = json.load(f)
+    # print(config)
+    task_preprocessed = task
+    phases = task.get("phases")
+    loops = task.get("loops")
+    errors = task.get("errors")
+    phases_new = []
+    for phase in phases:
+        if "image_name" in phase:
+            phase["img_path"] = get_img_path(phase["image_name"])
+            phase.pop("image_name")
+        # print(phase)
+        phases_new.append(phase)
+    task_preprocessed["phases"] = phases_new
+    
+    if loops:
+        for loop_id, loop_phases in loops.items():
+            loop_phase_new = []
+            for loop_phase in loop_phases:
+                if "image_name" in loop_phase:
+                    loop_phase["img_path"] = get_img_path(loop_phase["image_name"],type="loops")
+                    loop_phase.pop("image_name")
+                loop_phase_new.append(loop_phase)
+            task_preprocessed["loops"] = loop_phase_new
+
+    task_preprocessed["errors"] = []
+    if errors:
+        for image_name in errors:
+            task_preprocessed["errors"].append(get_img_path(image_name, type="errors"))
+    # logger.info(task_preprocessed)
+    return task_preprocessed
 
 # aircv相关操作
-# 找到图片A在图片B的位置
+# 找到 图片A 在 图片B 的位置
 def find_location(image_src, image_search):
     # todo 从配置文件读入
-    threshold=0.99
+    threshold = 0.98
     result = find_template(image_src, image_search, threshold)
     if (result != None):
         # logger.info(result)
@@ -90,18 +95,23 @@ def find_location(image_src, image_search):
     else:
         # logger.info("模板图片未找到！")
         return False, 0, 0
-    
-def move( x, y, movetime=0):  # 鼠标移动 x,y_移动位置，movetime_移动时间
+
+# pyautogui 键鼠操作
+def move(x, y, movetime=0):  # 鼠标移动 x,y_移动位置，movetime_移动时间
     moveTo(x, y, duration=movetime)
 
+
 def click(x, y, times, type="left"):		# left right middle
-    py_click(x, y, clicks=int(times), button=type,interval=0.5)
+    py_click(x, y, clicks=int(times), button=type, interval=0.5)
+
 
 def doubleClick(x, y, type="left"):
     py_doubleClick(x, y, button=type)
 
+
 def press(key, times):
     py_press(key, presses=times, interval=0.1)
+
 
 def hotkey(*keys):
     py_hotkey(*keys)

@@ -1,28 +1,34 @@
 # 自定义定时任务
 
-通过图像识别，可自定义定时任务，只需要在 `img` 中添加自己的任务文件夹，并放置需要的图片，随后在 `config.json`，中配置识别流程，即可轻松自定义定时任务！
+通过图像识别，可自定义定时任务，只需要在 `img` 中放置需要的图片，随后在 `task.json`，中配置识别流程，即可轻松自定义定时任务！
 
-目前支持的操作如下：
+`img` 共 3 个文件夹：
+
+- errors
+- loops
+- phases
+
+`task.json` 示例如下：
 
 ```json
 {
-  "task_name": {
-    "schedule": false,
-    "phases": [
-      {"comment": "等待 2 秒","action": "wait","duration": 2},
-      {"comment": "热键", "action": "hotkey","keys": ["winleft", "d"]},
-      {"comment": "单击", "img_id": 1, "action": "click","times":2},
-      {"comment": "双击", "img_id": 1,"action": "doubleClick","times":2},
-      {"comment": "等待完成", "img_id": 2,"action": "finish"},
-      {"comment": "插槽", "action": "slot","handler": "seer_login"},
-      {"comment": "循环", "img_id": 4,"action": "loop","index": "index_1","times":2}
-      {"comment": "打开 exe", "action": "open","path": "/path/to/file_name_reg.*.exe"}
-    ],
-    "loops": {
-      "index_1": [
-          //循环体的 phases
-      ]
-    }
+  "schedule": "14:30:00", // 定时执行
+  "times":0, // 0 表示无数次，默认为 1
+  "phases": [
+    {"comment": "等待 2 秒","action": "wait","duration": 2},
+    {"comment": "热键", "action": "hotkey","keys": ["winleft", "d"]},
+    {"comment": "单击", "image_name": "img_name_en", "action": "click","times":2},
+    {"comment": "双击", "image_name": "img_name_en","action": "doubleClick","times":2},
+    {"comment": "等待完成", "image_name": 2,"action": "finish"},
+    {"comment": "插槽", "action": "slot","handler": "seer_login"},
+    {"comment": "循环", "action": "loop","loop_id": "index_1","times":2}
+    {"comment": "打开 exe", "action": "open","path": "/path/to/file_name_reg.*.exe"}
+  ],
+  "errors":["img_name1","img_name2"], // 检测到此处的图片时，会重新执行所有 phases
+  "loops": {
+    "index_1": [
+        //循环体的 phases
+    ]
   }
 }
 
@@ -32,7 +38,7 @@
 若想运行源代码版本，可进行如下操作：
 
 ```sh
-# python 3.8.10
+# python 3.8+
 
 # pytorch https://pytorch.org/get-started/locally/
 
@@ -70,7 +76,7 @@ add folder recursive -> dist\main
 # Process
 ```
 
-# update
+# Todo
 
 1. 后续计划新增 `或` 语法：
 
@@ -79,31 +85,8 @@ add folder recursive -> dist\main
   "task_name": {
     "schedule": false,
     "phases": [
-      {"comment":"或", "img_ids": [1,2],"action": "click/doubleClick/move/finish","index": "index_1","times":2}
+      {"comment":"或", "image_names": [1,2],"action": "click/doubleClick/move/finish","index": "index_1","times":2}
     ],
   }
 }
 ```
-2. 错误处理
-
-新开一个进程，配置文件如下：
-
-```json
-{
-  "task_name": {
-    "schedule": false,
-    "phases": [],
-    "errors":[],  // 语法和 phases 相同，例如识图时发现 flash 崩溃如何处理之类的
-    "loops":{}
-  }
-}
-
-```
-
-3. 允许配置多任务
-
-配置文件已经支持，需要修改main.py，暂定使用多线程。
-
-- 同时执行多个任务
-- 还是修改为依次执行？
-- 或者修改为启动时让用户选择本次执行哪一个任务？
