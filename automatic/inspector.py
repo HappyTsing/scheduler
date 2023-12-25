@@ -22,7 +22,7 @@ class Inspector(Process):
         return self.receiver.get()
 
     # 获取图像，检查是否存在漏洞，存在则写入管道
-    def run(self):
+    def exec_full(self):
         logger.info("Inspector Start!")
         task = get_task()
         error_image_paths = task.get("errors")
@@ -34,6 +34,12 @@ class Inspector(Process):
                 find, x, y = find_location(current_screenshot, error_image)
                 if find:
                     logger.error("Inspector Find Error: image path: {}".format(error_image_path))
-                    error_message = "Hit Error Image: {}".format(error_image_path)
+                    error_message = "Inspector| Hit Error Image: {}".format(error_image_path)
                     self.sender.put(error_message)
                 sleep(2)
+    def run(self):
+        try:
+            self.exec_full()
+        except Exception as e:
+            logger.error(f"{e} | inspector will exit after 10s...")
+            sleep(10)       

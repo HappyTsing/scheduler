@@ -1,26 +1,26 @@
 {
-  "schedule": "02:00:00",
-  "times": 0,
+  "schedule":"12:00:00",
+  "times":10,
   "phases": [
     {
       "comment": "等待 2 秒",
-      "action": "wait",
+      "action": "sleep",
       "duration": 2
     },
     {
       "comment": "最小化所有窗口",
-      "action": "hotkey",
-      "keys": ["winleft", "d"]
+      "action": "keyboard",
+      "input": ["winleft", "d"]
     },
     {
       "comment": "打开雷小伊脱机日常",
-      "path": "C:\\Users\\59376\\Desktop\\雷伊脱机\\雷小伊脱机日常.*.exe",
+      "path": "C:\\Users\\59376\\Desktop\\Rey\\雷小伊脱机日常.*.exe",
       "action": "open"
     },
     {
       "comment": "等待确定弹出",
       "image_name": "1",
-      "action": "finish"
+      "action": "wait_until"
     },
     {
       "comment": "点击确定",
@@ -30,7 +30,7 @@
     {
       "comment": "选择账号",
       "image_name": "2",
-      "action": "finish"
+      "action": "wait_until"
     },
     {
       "comment": "开始选择账号",
@@ -40,7 +40,7 @@
     {
       "comment": "等待账号列表",
       "image_name": 3,
-      "action": "finish"
+      "action": "wait_until"
     },
     {
       "comment": "选择 180937687",
@@ -50,7 +50,7 @@
     {
       "comment": "确认已选中",
       "image_name": 4,
-      "action": "finish"
+      "action": "wait_until"
     },
     {
       "comment": "点击登录",
@@ -60,7 +60,7 @@
     {
       "comment": "登录成功",
       "image_name": 9,
-      "action": "finish"
+      "action": "wait_until"
     },
     {
       "comment": "点击开始",
@@ -70,12 +70,12 @@
     {
       "comment": "等待 180937687 执行完毕",
       "image_name": 7,
-      "action": "finish"
+      "action": "wait_until"
     },
     {
       "comment": "选择账号",
       "image_name": 2,
-      "action": "finish"
+      "action": "wait_until"
     },
     {
       "comment": "开始选择账号",
@@ -85,7 +85,7 @@
     {
       "comment": "等待账号列表",
       "image_name": 8,
-      "action": "finish"
+      "action": "wait_until"
     },
     {
       "comment": "选择 814850289",
@@ -95,7 +95,7 @@
     {
       "comment": "确认已选中",
       "image_name": 10,
-      "action": "finish"
+      "action": "wait_until"
     },
     {
       "comment": "点击登录",
@@ -105,7 +105,7 @@
     {
       "comment": "登录成功",
       "image_name": 9,
-      "action": "finish"
+      "action": "wait_until"
     },
     {
       "comment": "点击开始",
@@ -115,7 +115,7 @@
     {
       "comment": "等待 814850289 执行完毕",
       "image_name": 7,
-      "action": "finish"
+      "action": "wait_until"
     },
     {
       "comment": "关闭雷小伊脱机日常",

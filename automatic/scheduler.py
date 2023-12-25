@@ -16,7 +16,6 @@ from loguru import logger
 MAX_QUEUE_IMAGE_SIZE = 2
 MAX_QUEUE_ERROR_SIZE = 3
 
-
 class Scheduler:
     def __init__(self):
         logger.info("Scheduler Init!")
@@ -25,7 +24,7 @@ class Scheduler:
         # queue_error 用于传输监察者检测到的问题信息，目前检测到问题就立刻重启！
         self.queue_error = Queue(maxsize=MAX_QUEUE_ERROR_SIZE)
         # 创建执行者、监察者和观察者对象
-        self.executor = Executor(self.queue_image)
+        self.executor = Executor(self.queue_image,self.queue_error)
         self.inspector = Inspector(self.queue_image, self.queue_error)
         self.observer = Observer(self.queue_image)
 
@@ -39,7 +38,7 @@ class Scheduler:
             if not self.queue_error.empty():
                 # 如果队列不为空，取出数据
                 error_message = self.queue_error.get()
-                logger.error(f"Inspector Find Error: {error_message}. Try to Restart SubProcess...")
+                logger.error(f"Find Error: {error_message}. Try to Restart SubProcess...")
                 self.restart()
                 return
             else:
@@ -57,7 +56,7 @@ class Scheduler:
         logger.info("Wait SubProcess Finish Success: Executor, Inspector, Observer")
         self.clear_queue()
         logger.info("Clear Queue Success: queue_error, queue_image")
-        self.executor = Executor(self.queue_image)
+        self.executor = Executor(self.queue_image,self.queue_error)
         self.inspector = Inspector(self.queue_image, self.queue_error)
         self.observer = Observer(self.queue_image)
         self.start()

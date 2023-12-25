@@ -15,14 +15,15 @@
   "schedule": "14:30:00", // 定时执行
   "times":0, // 0 表示无数次，默认为 1
   "phases": [
-    {"comment": "等待 2 秒","action": "wait","duration": 2},
-    {"comment": "热键", "action": "hotkey","keys": ["winleft", "d"]},
+    {"comment": "睡眠等待 2 秒","action": "sleep","duration": 2},
+    {"comment": "键盘输入", "action": "keyboard","input": ["winleft", "d"]}, // 可以输入组合键，也可以输入任意字符，会按顺序输入
     {"comment": "单击", "image_name": "img_name_en", "action": "click","times":2},
     {"comment": "双击", "image_name": "img_name_en","action": "doubleClick","times":2},
-    {"comment": "等待完成", "image_name": 2,"action": "finish"},
-    {"comment": "插槽", "action": "slot","handler": "seer_login"},
-    {"comment": "循环", "action": "loop","loop_id": "index_1","times":2}
-    {"comment": "打开 exe", "action": "open","path": "/path/to/file_name_reg.*.exe"}
+    {"comment": "等待完成", "image_name": 2,"action": "wait_until"},
+    {"comment": "循环", "action": "loop","loop_id": "index_1","times":2},
+    {"comment": "打开 exe", "action": "open","path": "/path/to/file_name_reg.*.exe"},
+    {"comment": "插槽", "action": "slot","handler": "seer_login"}
+
   ],
   "errors":["img_name1","img_name2"], // 检测到此处的图片时，会重新执行所有 phases
   "loops": {
@@ -33,6 +34,15 @@
 }
 
 ```
+
+此外，你可以在 `config.json` 中配置其余参数，例如识图的阈值：
+
+```json
+{
+    "threshold":0.985 // max 1
+}
+```
+
 ## Quick start
 
 若想运行源代码版本，可进行如下操作：
@@ -72,6 +82,8 @@ dist\main\main.exe
 
 # Drag files and folders to the Virtual Box Files tree
 add folder recursive -> dist\main
+
+# Enter Input File Name 修改 .exe 的文件名
 
 # Process
 ```

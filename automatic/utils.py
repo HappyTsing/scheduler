@@ -7,7 +7,7 @@ import sys
 
 
 def print_hello():
-    print("Author: HappyTsing\tVersion: 4.0\t Date: 2023.12.17\n")
+    print("Author: HappyTsing\tVersion: 4.5\t Date: 2023.12.25\n")
 
 
 def get_current_path():
@@ -35,21 +35,17 @@ def get_img_path(image_name, type="phases"):
         raise
     return img_path
 
-
 '''
-@return: config/None
+@return: task/None
 '''
-
-
 def get_task():
     CUR_PATH = get_current_path()
     TASK_PATH = path.join(CUR_PATH, "task.json")
     if not path.exists(TASK_PATH):
-        logger.error("config file: {} does not exist.".format(TASK_PATH))
+        logger.error("task file: {} does not exist.".format(TASK_PATH))
         return None
     with open(TASK_PATH, 'r', encoding="utf8") as f:
         task = json.load(f)
-    # print(config)
     task_preprocessed = task
     phases = task.get("phases")
     loops = task.get("loops")
@@ -80,11 +76,20 @@ def get_task():
     # logger.info(task_preprocessed)
     return task_preprocessed
 
+def get_config():
+    CUR_PATH = get_current_path()
+    CONFIG_PATH = path.join(CUR_PATH, "config.json")
+    if not path.exists(CONFIG_PATH):
+        logger.warning("config file: {} does not exist. using default config".format(CONFIG_PATH))
+        return {}
+    with open(CONFIG_PATH, 'r', encoding="utf8") as f:
+        config = json.load(f)
+    return config
+CONFIG = get_config()
 # aircv相关操作
 # 找到 图片A 在 图片B 的位置
 def find_location(image_src, image_search):
-    # todo 从配置文件读入
-    threshold = 0.98
+    threshold = CONFIG.get("threshold",0.99)
     result = find_template(image_src, image_search, threshold)
     if (result != None):
         # logger.info(result)
