@@ -18,6 +18,11 @@ class Executor(Process):
     def get_screeshot(self):
         return self.receiver.get()
     
+    # 通过消耗图片，以获取当前的精准图片
+    def delete_expired_images(self):
+        for _i in range(5):
+            self.get_screeshot()
+    
     def scheduler(self,task_schedule):
         now = datetime.now()
         schedule_hour,schedule_minute,schedule_second = str(task_schedule).split(":")
@@ -25,11 +30,10 @@ class Executor(Process):
         sleep_time = schedule - now
         logger.info("将在 {} 后自动开始, 等待中...".format(strftime("%H:%M:%S", gmtime(sleep_time.seconds))))
         sleep(sleep_time.seconds)
-        # 长时间等待似乎会识别错误，消耗几张图片试试
-        for _i in range(5):
-            self.get_screeshot()
+        self.delete_expired_images()
         
     def click(self,target_image,times):
+        self.delete_expired_images()
         for i in range(5):
             current_screenshot = self.get_screeshot()
             # imwrite(str(i)+".png",current_screenshot)
@@ -43,6 +47,7 @@ class Executor(Process):
         return False
             
     def double_click(self,target_image):
+        self.delete_expired_images()
         for i in range(5):
             current_screenshot = self.get_screeshot()
             find, x, y = find_location(current_screenshot, target_image)
@@ -87,6 +92,7 @@ class Executor(Process):
     
     # 移动鼠标到某个地方
     def move_to(self,target_image):
+        self.delete_expired_images()
         for i in range(5):
             current_screenshot = self.get_screeshot()
             find, x, y = find_location(current_screenshot, target_image)
@@ -99,6 +105,7 @@ class Executor(Process):
             
     def sleep(self,duration):
         sleep(int(duration))
+        self.delete_expired_images()
         return True
         
     def wait_until(self,target_image):
