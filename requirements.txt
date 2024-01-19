@@ -8,3 +8,4 @@ pyyaml
 aircv
 tdqm
 pillow
+pyinstaller

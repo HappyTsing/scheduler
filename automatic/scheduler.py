@@ -15,7 +15,7 @@ from time import sleep
 from loguru import logger
 MAX_QUEUE_IMAGE_SIZE = 2
 MAX_QUEUE_ERROR_SIZE = 3
-
+MAX_RESTART_TIME = 3 # 最大重启次数
 class Scheduler:
     def __init__(self):
         logger.info("Scheduler Init!")
@@ -29,6 +29,7 @@ class Scheduler:
         self.observer = Observer(self.queue_image)
 
     def start(self):
+        restart_times = 0
         self.observer.start()
         self.inspector.start()
         self.executor.start()
@@ -39,7 +40,9 @@ class Scheduler:
                 # 如果队列不为空，取出数据
                 error_message = self.queue_error.get()
                 logger.error(f"Find Error: {error_message}. Try to Restart SubProcess...")
-                self.restart()
+                if restart_times < MAX_RESTART_TIME:
+                    self.restart()
+                    restart_times += 1
                 return
             else:
                 # 如果队列为空，等待一段时间再尝试

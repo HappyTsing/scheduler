@@ -48,7 +48,8 @@
 若想运行源代码版本，可进行如下操作：
 
 ```sh
-# python 3.8+
+# python 3.8+ 3.9-
+# 注：python 3.9 已不再支持 Win7，会报错：api-ms-win-core-path-|1-1-0 丢失，因为 3.9 依赖这个 dll，而该 dll 在 win8 才引入！
 
 # pytorch https://pytorch.org/get-started/locally/
 
@@ -74,7 +75,7 @@ pyinstaller -F main.py
 
 ```sh
 # 1. pyinstaller
-pyinstaller -D main.py
+pyinstaller -i ./app.ico -D main.py
 
 # 2. Enigma Virtual Box  再次压缩
 # Enter Input File Name
@@ -82,6 +83,8 @@ dist\main\main.exe
 
 # Drag files and folders to the Virtual Box Files tree
 add folder recursive -> dist\main
+
+# Files Options - Compress file 压缩
 
 # Enter Input File Name 修改 .exe 的文件名
 
