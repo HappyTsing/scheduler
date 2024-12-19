@@ -12,13 +12,19 @@ from math import floor
 import traceback
 from automatic.utils import *
 from time import sleep
+from automatic.utils import print_hello
 CUR_PATH = path.dirname(path.realpath(argv[0]))
 LOG_PATH = path.join(CUR_PATH,"scheduler.log")
 logger.add(LOG_PATH)
 
 def main():
-    schedule = Scheduler()
-    schedule.start()
+    print_hello()
+    try:
+        schedule = Scheduler()
+        schedule.start()
+    except Exception as e:
+        logger.error(f"{e} | scheduler will exit after 10s...")
+        sleep(10)       
 
 if __name__ == '__main__':
     freeze_support()

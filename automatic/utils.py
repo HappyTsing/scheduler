@@ -7,7 +7,13 @@ import sys
 
 
 def print_hello():
-    print("Author: HappyTsing\tVersion: 4.5\t Date: 2023.12.25\n")
+    print("""
+ ____   ___  _  _  ____  ____  _  _  __    ____  ____ 
+/ ___) / __)/ )( \(  __)(    \/ )( \(  )  (  __)(  _ \\
+\___ \( (__ ) __ ( ) _)  ) D () \/ (/ (_/\ ) _)  )   /
+(____/ \___)\_)(_/(____)(____/\____/\____/(____)(__\_)
+          """)
+    print("Author: HappyTsing\tVersion: 5.2\t Last Update: 2024-12-19\n")
 
 
 def get_current_path():

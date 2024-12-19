@@ -61,6 +61,8 @@ python3 main.py
 ```
 
 > 建议直接使用打包好的 release 版本，双击 `exe` 文件即可运行。
+>
+> 对于 Windows-Server，若报错 `DLL load failed while importing cv2`,需要添加功能 `桌面体验`,然后 `重启服务器` 方可正常运行。
 
 ## Package
 
@@ -75,7 +77,7 @@ pyinstaller -F main.py
 
 ```sh
 # 1. pyinstaller
-pyinstaller -i ./app.ico -D main.py
+pyinstaller -i ./app.ico -D main.py 
 
 # 2. Enigma Virtual Box  再次压缩
 # Enter Input File Name
@@ -86,7 +88,7 @@ add folder recursive -> dist\main
 
 # Files Options - Compress file 压缩
 
-# Enter Input File Name 修改 .exe 的文件名
+# Enter Output File Name 修改 .exe 的文件名
 
 # Process
 ```
