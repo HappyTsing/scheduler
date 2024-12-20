@@ -4,8 +4,9 @@ from loguru import logger
 import json
 from os import path
 import sys
-
-
+import smtplib
+from email.mime.text import MIMEText
+from email.header import Header
 def print_hello():
     print("""
  ____   ___  _  _  ____  ____  _  _  __    ____  ____ 
@@ -13,7 +14,7 @@ def print_hello():
 \___ \( (__ ) __ ( ) _)  ) D () \/ (/ (_/\ ) _)  )   /
 (____/ \___)\_)(_/(____)(____/\____/\____/(____)(__\_)
           """)
-    print("Author: HappyTsing\tVersion: 5.2\t Last Update: 2024-12-19\n")
+    print("Author: HappyTsing\tVersion: 6.0\t Last Update: 2024-12-20\n")
 
 
 def get_current_path():
@@ -25,9 +26,8 @@ def get_current_path():
     return CUR_PATH
 
 
-def get_img_path(image_name, type="phases"):
-    CUR_PATH = get_current_path()
-    IMG_PATH = path.join(CUR_PATH, "img")
+def get_img_path(absolute_base_path, image_name, type="phases"):
+    IMG_PATH = path.join(absolute_base_path, "img")
     if type == "phases":
         img_path = path.join(IMG_PATH, "phases", "{}.png".format(image_name))
     elif type == "errors":
@@ -44,9 +44,17 @@ def get_img_path(image_name, type="phases"):
 '''
 @return: task/None
 '''
-def get_task():
+# 默认处理主任务，也就是 Scheduler.exe 所在目录，也就是根目录的 task.json
+# 也可指定基目录，例如基目录为 img/errors/seer_login_handler 时，此时会处理该目录下的 task.json
+# 传入的 base_path 为相对路径。
+def get_task(base_path="default"):
     CUR_PATH = get_current_path()
-    TASK_PATH = path.join(CUR_PATH, "task.json")
+    if base_path == "default":
+        ABSOLUTE_BASE_PATH = CUR_PATH
+    else:
+        ABSOLUTE_BASE_PATH = path.join(CUR_PATH,base_path)
+    TASK_PATH = path.join(ABSOLUTE_BASE_PATH, "task.json")
+    # logger.info(f"Running Task {TASK_PATH}")
     if not path.exists(TASK_PATH):
         logger.error("task file: {} does not exist.".format(TASK_PATH))
         return None
@@ -59,7 +67,7 @@ def get_task():
     phases_new = []
     for phase in phases:
         if "image_name" in phase:
-            phase["img_path"] = get_img_path(phase["image_name"])
+            phase["img_path"] = get_img_path(ABSOLUTE_BASE_PATH,phase["image_name"])
             phase.pop("image_name")
         # print(phase)
         phases_new.append(phase)
@@ -70,15 +78,15 @@ def get_task():
             loop_phase_new = []
             for loop_phase in loop_phases:
                 if "image_name" in loop_phase:
-                    loop_phase["img_path"] = get_img_path(loop_phase["image_name"],type="loops")
+                    loop_phase["img_path"] = get_img_path(ABSOLUTE_BASE_PATH,loop_phase["image_name"],type="loops")
                     loop_phase.pop("image_name")
                 loop_phase_new.append(loop_phase)
-            task_preprocessed["loops"] = loop_phase_new
+            task_preprocessed["loops"][loop_id] = loop_phase_new
 
     task_preprocessed["errors"] = []
     if errors:
         for image_name in errors:
-            task_preprocessed["errors"].append(get_img_path(image_name, type="errors"))
+            task_preprocessed["errors"].append(get_img_path(ABSOLUTE_BASE_PATH,image_name, type="errors"))
     # logger.info(task_preprocessed)
     return task_preprocessed
 
@@ -126,3 +134,26 @@ def press(key, times):
 
 def hotkey(*keys):
     py_hotkey(*keys)
+
+def send_email(subject,content):
+    # 发件人邮箱账号
+    sender = CONFIG.get("sender")
+    # 发件人邮箱的授权码（注意不是登录密码）
+    password = CONFIG.get("password")
+    # 收件人邮箱账号，可以是多个收件人，以列表形式传入
+    receivers = CONFIG.get("receivers")
+    # 邮件内容，这里是纯文本内容，你可以根据需求修改
+    message = MIMEText(content, 'plain', 'utf-8')
+    # 邮件主题
+    message['Subject'] = Header(subject, 'utf-8')
+    # 发件人
+    message['From'] = Header(sender)
+    # 收件人
+    message['To'] = Header(",".join(receivers), 'utf-8')
+    try:
+         # 使用SMTP连接到QQ邮箱的SMTP服务器，端口为587（使用TLS）
+        smtpObj = smtplib.SMTP_SSL("smtp.qq.com", 465)
+        smtpObj.login(sender, password)
+        smtpObj.sendmail(sender, receivers, message.as_string())
+    except smtplib.SMTPException as e:
+        logger.error(f"send email failed: {e}")

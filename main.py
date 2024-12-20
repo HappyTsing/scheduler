@@ -23,8 +23,8 @@ def main():
         schedule = Scheduler()
         schedule.start()
     except Exception as e:
-        logger.error(f"{e} | scheduler will exit after 10s...")
-        sleep(10)       
+        logger.error(f"{e} | scheduler will exit after 1 min...")
+        sleep(60)       
 
 if __name__ == '__main__':
     freeze_support()

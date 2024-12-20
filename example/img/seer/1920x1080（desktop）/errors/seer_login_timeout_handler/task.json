@@ -1,0 +1,51 @@
+{
+    "phases": [
+        {"comment": "循环", "action": "loop","loop_id": "index_1","times":10}
+    ],
+    "loops": {
+        "index_1": [
+            {
+                "comment": "等待 2 秒,开始 seer login timeout handler 任务",
+                "action": "sleep",
+                "duration": 2
+            },
+            {
+                "comment": "最小化所有窗口",
+                "action": "keyboard",
+                "input": ["winleft", "d"]
+            },
+            {
+                "comment": "打开雷小伊脱机日常",
+                "path": "..\\雷小伊脱机日常.*.exe",
+                "action": "open"
+            },
+            {
+                "comment": "等待确定弹出",
+                "image_name": "1",
+                "action": "wait_until"
+            },
+            {
+                "comment": "点击确定",
+                "image_name": "1",
+                "action": "click"
+            },
+            {           
+                "comment": "等待雷小伊打开",
+                "image_name": "3",
+                "action": "wait_until"
+            },
+            {
+            "comment": "关闭雷小伊脱机日常",
+            "image_name": 2,
+            "action": "click"
+            },
+            {
+                "comment": "2小时后继续尝试",
+                "action": "sleep",
+                "duration": 7200
+            }
+        ]
+    },
+    "errors": ["ray_update"]
+  }
+  

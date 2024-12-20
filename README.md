@@ -25,7 +25,7 @@
     {"comment": "插槽", "action": "slot","handler": "seer_login"}
 
   ],
-  "errors":["img_name1","img_name2"], // 检测到此处的图片时，会重新执行所有 phases
+  "errors":["ray_update","seer_login_timeout"], // 检测到ray_update时，发送邮件通知；检测到seer_login_timeout时，不断启动检测雷小伊是否更新
   "loops": {
     "index_1": [
         //循环体的 phases
@@ -39,7 +39,10 @@
 
 ```json
 {
-    "threshold":0.985 // max 1
+    "threshold":0.985, // max 1
+    "sender":"<email>@qq.com", // 邮箱发送人
+    "password":"<授权码>", //不是密码，注意别搞混，请修改为自己的
+    "receivers":["<email1>@qq.com,<email2>@qq.com,..."] //收件人，可以有多个
 }
 ```
 

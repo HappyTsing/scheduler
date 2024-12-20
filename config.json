@@ -1,3 +1,6 @@
 {
-    "threshold":0.985
+    "threshold":0.985,
+    "sender":"2429590425@qq.com",
+    "password":"cxzdawwlqjrtgjfdhgj",
+    "receivers":["2429590425@qq.com"]
 }

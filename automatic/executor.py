@@ -9,11 +9,13 @@ from os import path, listdir, system, rename
 from re import search
 from automatic.utils import get_task
 from sys import maxsize
+
 class Executor(Process):
-    def __init__(self,queue_image_receiver,queue_error_sender):
+    def __init__(self,queue_image_receiver,queue_error_sender,base_path="default"):
         super().__init__()  
         self.receiver = queue_image_receiver
         self.sender = queue_error_sender
+        self.base_path = base_path
         
     def get_screeshot(self):
         return self.receiver.get()
@@ -165,18 +167,19 @@ class Executor(Process):
         }
         if action not in action_handler.keys():
             logger.error (f"action not found: {action}")
-            error_message = f"Scheduler | action not found: {action}"
+            error_message = f"Executor | Stop | action not found: {action}"
             error_flag = True
         try:
             if action_handler[action]():
                 logger.success(f"{comment} success")
             else:
                 logger.error(f"{comment} failed")
-                error_message = f"Scheduler | {comment} failed"
+                error_message = f"Executor | Stop | {comment} failed"
+                # error_message = f"Executor | Restart | {comment} failed"
                 error_flag = True
         except Exception as e:
             logger.error(f"{e}")
-            error_message = f"Scheduler | Exception {e}"
+            error_message = f"Executor | Stop Exception {e}"
             error_flag = True
         # 若某个阶段执行失败，通知调度者
         if error_flag:
@@ -185,7 +188,10 @@ class Executor(Process):
             
     def exec_full(self):
         logger.info("Executor Start!")
-        task = get_task()
+        # base_path 为执行的配置文件 task.json 及其对应的图 /img 的位置。
+        # 默认传入 "default"，也就是根目录的主 task。
+        # 但有时候会根据报错执行特定的 task，例如遇到报错 img/errors/seer_login_timeout 报错，则会执行 img/errors/seer_login_timeout_handler
+        task = get_task(self.base_path)
         phases = task["phases"]
         times = task.get("times",1) # 默认为 1 次
         schedule_time = task.get("schedule")
@@ -204,8 +210,8 @@ class Executor(Process):
                     self.exec_phase(phase)
                 else:
                     loop_id = phase.get("loop_id")
-                    times = phase.get("times")
-                    loop_phases = task["loops"][loop_id]
+                    times = int(phase.get("times"))
+                    loop_phases = task["loops"].get(loop_id)
                     for i in range(times):
                         for loop_phase in loop_phases:
                             self.exec_phase(loop_phase)

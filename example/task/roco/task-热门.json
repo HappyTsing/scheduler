@@ -1,0 +1,31 @@
+{
+  "phases": [
+    { "comment": "点击热门", "image_name": 80, "action": "click" },
+    { "comment": "等待第一个", "image_name": 81, "action": "wait_until" },
+    { "comment": "选中第一个", "image_name": 81, "action": "click" },
+    { "comment": "活动1-1开始", "image_name": 82, "action": "doubleClick" },
+    { "comment": "等待2秒", "action": "sleep", "duration": 2 },
+    { "comment": "活动1-1结束", "image_name": 82, "action": "wait_until" },
+    { "comment": "右移", "action": "keyboard", "input": ["right","right"] },
+    { "comment": "活动1-2开始", "image_name": 82, "action": "doubleClick" },
+    { "comment": "等待2秒", "action": "sleep", "duration": 2 },
+    { "comment": "活动1-2结束", "image_name": 82, "action": "wait_until" },
+    { "comment": "右移", "action": "keyboard", "input": ["right"] },
+    { "comment": "活动1-3开始", "image_name": 82, "action": "doubleClick" },
+    { "comment": "等待2秒", "action": "sleep", "duration": 2 },
+    { "comment": "活动1-3结束", "image_name": 82, "action": "wait_until" },
+    { "comment": "下移", "action": "keyboard", "input": ["down"] },
+    { "comment": "活动2-3开始", "image_name": 82, "action": "doubleClick" },
+    { "comment": "等待2秒", "action": "sleep", "duration": 2 },
+    { "comment": "活动2-3结束", "image_name": 82, "action": "wait_until" },
+    { "comment": "左移", "action": "keyboard", "input": ["left"] },
+    { "comment": "活动2-2开始", "image_name": 82, "action": "doubleClick" },
+    { "comment": "等待2秒", "action": "sleep", "duration": 2 },
+    { "comment": "活动2-2结束", "image_name": 82, "action": "wait_until" },
+    { "comment": "左移", "action": "keyboard", "input": ["left"] },
+    { "comment": "活动2-1开始", "image_name": 82, "action": "doubleClick" },
+    { "comment": "等待2秒", "action": "sleep", "duration": 2 },
+    { "comment": "活动2-1结束", "image_name": 82, "action": "wait_until" }
+  ],
+  "errors": ["error"]
+}
